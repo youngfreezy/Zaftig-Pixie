@@ -1,10 +1,8 @@
 var express = require('express');
+var 
 
 // Middleware
 var parser = require('body-parser');
-
-// Router
-var router = require('./routes.js');
 
 var app = express();
 
@@ -26,6 +24,22 @@ if (!module.parent) {
 /*----------  Routes  ----------*/
 
 
-app.get('/test', function (request, response) {
-  console.log('Test totally works, biatch!');
+// request user data from database
+app.get('/user', funciton (request, response) {
+
+});
+
+// login user and create session
+app.post('/login', funciton (request, response) {
+
+});
+
+// register a new user to the databse
+app.post('/register', funciton (request, response) {
+
+});
+
+// serve passage to the client
+app.get('/text', funciton (request, response) {
+
 });
