@@ -7,15 +7,19 @@ var InputView = Backbone.View.extend({
   }, 
 
   events: {
-    'input': function (e) {
-      if(e.target.value[e.target.value.length-1] === " "){
-        console.log("space pressed");
-      }
-    }
+    'input': spacePressHandler
   },
 
   render: function () {
     return this.$el;
+  }, 
+
+  spacePressHandler: function (e) {
+    var currentInput = e.target.value;
+    if(currentInput[currentInput.length-1] === " "){
+      this.model.set('currentWord', currentInput.substring(0, currentInput.length-1));
+      e.target.value = "";
+    }
   }
 
 });
