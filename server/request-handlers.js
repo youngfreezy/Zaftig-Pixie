@@ -31,6 +31,7 @@ module.exports.login = function (request, response) {
               // util.createSession(request, response, user);
               response.send('Your passwords match!  Hooray.');
             } else {
+              console.log('This is match from the request handler: ', match);
               response.send('Passwords do not match, you scoundrel!');
             }
           });
@@ -44,7 +45,7 @@ module.exports.register = function (request, response) {
     var username = request.body.username;
     var password = request.body.password;
     console.log('Saving username: "' + username + ' and password: "' + password + '" to the database. ');
-    User.create({ username: username, password: password }, function (err, small) {
+    User.create( {username: username, password: password} , function (err, small) {
       if (err) return handleError(err);
     });
     response.send('User registered.');
