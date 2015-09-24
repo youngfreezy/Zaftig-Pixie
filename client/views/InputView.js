@@ -9,7 +9,7 @@ var InputView = Backbone.View.extend({
   events: {
     'input': function (e) {
       this.spacePressHandler(e);
-    }
+    },
   },
 
   render: function () {
@@ -18,8 +18,8 @@ var InputView = Backbone.View.extend({
 
   spacePressHandler: function (e) {
     var currentInput = e.target.value;
-    if(currentInput[currentInput.length-1] === " "){
-      this.model.set('currentWord', currentInput.substring(0, currentInput.length-1));
+    if( currentInput[currentInput.length-1] === " " ){
+      this.model.spaceHandler(currentInput.substring(0, currentInput.length-1));
       e.target.value = "";
     }
   }
