@@ -7,4 +7,12 @@ var userSchema = mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
+User.comparePassword = function(candidatePassword, savedPassword, cb) {
+  if (candidatePassword === savedPassword) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
 module.exports = User;
