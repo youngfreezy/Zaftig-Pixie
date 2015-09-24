@@ -1,4 +1,5 @@
 var express = require('express');
+var handlers = require('./request-handlers');
 
 // Middleware
 var parser = require('body-parser');
@@ -24,21 +25,13 @@ if (!module.parent) {
 
 
 // request user data from database
-app.get('/user', function (request, response) {
-
-});
+app.use('/user', handlers.user);
 
 // login user and create session
-app.post('/login', function (request, response) {
-
-});
+app.use('/login', handlers.user);
 
 // register a new user to the databse
-app.post('/register', function (request, response) {
-
-});
+app.use('/register', handlers.user);
 
 // serve passage to the client
-app.get('/text', function (request, response) {
-
-});
+app.use('/text', handlers.user);
