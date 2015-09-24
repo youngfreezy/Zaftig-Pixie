@@ -1,3 +1,19 @@
 body {
   background-color: #eee;
 }
+
+.warning {
+  color: red;
+}
+
+.correct{
+  outline-color: green;
+}
+
+.incorrect {
+  outline-color: red;
+}
+
+.noOutline {
+  outline: none;
+}
