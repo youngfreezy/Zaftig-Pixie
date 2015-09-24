@@ -5,7 +5,7 @@ var SpeedTyperView = Backbone.View.extend({
   className: "speedTyperContainer",
 
   initialize: function ( params ) {
-    this.inputView = new InputView({model: this.model});
+    this.inputView = new InputView({ model: this.model });
     this.paragraphView = new ParagraphView({ model: this.model })
     this.render();
   },
