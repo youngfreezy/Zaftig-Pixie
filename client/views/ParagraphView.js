@@ -6,7 +6,6 @@ var ParagraphView = Backbone.View.extend({
 
   initialize: function () {
     this.model.on('change:currentIndex', function () {
-      console.log('update current index')
       this.render();
     }, this);
 
@@ -17,7 +16,9 @@ var ParagraphView = Backbone.View.extend({
     return this.$el.html([
       this.model.get('paragraphArray')[this.model.get('currentIndex')] + " ",
       this.model.get('paragraphArray')[this.model.get('currentIndex') + 1] + " ",
-      this.model.get('paragraphArray')[this.model.get('currentIndex') + 2],
+      this.model.get('paragraphArray')[this.model.get('currentIndex') + 2] + " ",
+      this.model.get('paragraphArray')[this.model.get('currentIndex') + 3] + " ",
+      this.model.get('paragraphArray')[this.model.get('currentIndex') + 4]
       ]);
   }
 
