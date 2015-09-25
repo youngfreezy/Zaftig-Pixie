@@ -1,6 +1,7 @@
 var db = require('./config');
 var bodyParser = require('body-parser');
 var User = require('./mongoModels/user');
+// var utility = require('./utility');
 
 module.exports.user = function (request, response) {
   if(request.method==="GET"){
@@ -28,7 +29,7 @@ module.exports.login = function (request, response) {
         } else {
           User.comparePassword(password, user.password, function(err, match) {
             if (match) {
-              // util.createSession(request, response, user);
+              // utility.createSession(request, response, user);
               response.send('Your passwords match!  Hooray.');
             } else {
               console.log('This is match from the request handler: ', match);
