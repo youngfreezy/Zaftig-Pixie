@@ -1,11 +1,14 @@
 var express = require('express');
+var app = express();
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var handlers = require('./request-handlers');
-var bodyParser = require('body-parser');
+var socketHandlers = require('./socket-handlers');
+
 
 // Middleware
 var parser = require('body-parser');
-
-var app = express();
 
 // Set what we are listening on.
 app.set("port", 3000);
@@ -21,6 +24,24 @@ if (!module.parent) {
   app.listen(app.get("port"));
   console.log("Listening on", app.get("port"));
 }
+
+/*----------  Socket listeners  ----------*/
+
+io.on('connection', function (socket) {
+
+  socket.on('update', function (data) {
+    // update the other users with this user's data
+    socket.broadcast.emit('update', data);
+  });
+  
+    /* THIS LOGIC WILL BE IMPLEMENTED CLIENT SIDE?*/
+  // socket.on('endGame', function (data) {
+  //   // update the other users with the end game results
+  //   socket.broadcast.emit('endGame', data);
+  // });
+
+
+}); 
 
 
 /*----------  Routes  ----------*/

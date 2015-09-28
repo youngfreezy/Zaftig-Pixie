@@ -77,7 +77,6 @@ module.exports.text = function (request, response) {
     });
     data.text = jokes.join(' ');
     response.send(data);
-
   });
 
 
