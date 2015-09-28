@@ -1,31 +1,56 @@
-var GameScreen = function(){
-  this.width = 800;
-  this.height = 500;
+var GameScreen = function (width, height, threshold, player, opponent) {
+  this.width = width;
+  this.height = height;
+  this.threshold = threshold;
 
-  this.player = new Racer();
-  this.opponent = new Racer();
+  this.player = new Racer(player);
+  this.opponent = new Racer(opponent);
 }
 
-var Racer = function(){
-  this.width = 800;
-  this.height = 500;
-}
-
-
-Racer.prototype.render = function(){
+GameScreen.prototype.initialize = function () {
   var div = d3.select('body')
-            .append('div')
-            .attr('id', 'competition')
-            .append('svg:svg')
-            .attr('width', this.width)
-            .attr('height', this.height)
+              .append('div')
+              .attr('id', 'competition')
+              .append('svg:svg')
+              .attr('width', this.width)
+              .attr('height', this.height)
+
+  var svg = d3.select('svg');
+
+  svg.selectAll('rect')
+    .data([
+      [this.threshold/2, '#CA59DE', 0],
+      [this.threshold/2, '#46E3E3', this.threshold/2]
+    ])
+    .enter()
+    .append('rect')
+}
+
+GameScreen.prototype.render = function () { 
+  console.log(this.player.model);
+  console.log(this.opponent.model);
+
+  var total = this.player.model.get('numCorrect') + this.opponent.model.get('numCorrect');
+
+  // function to scale the score based on the width of the svg
+  var scale = d3.scale.linear().domain([0, this.threshold]).range([0, this.width]);
+
+  var difference = this.player.model.get('numCorrect') - this.opponent.model.get('numCorrect')
+
+  var playerData = [scale(this.threshold/2 + difference), '#CA59DE', 0];
+  var opponentData = [scale(this.threshold/2 + difference), '#46E3E3', scale(this.threshold/2 + difference)];
+
+  var data = []
+  data.push(playerData);
+  data.push(opponentData);
+
+  console.log(data);
 
   var svg = d3.select('svg')
 
   svg.selectAll('rect')
-    .data([[200, '#000', 0], [400, '#3994B3', 200]])
-    .enter()
-    .append('rect')
+    .data(data)
+    .transition()
     .attr('width', function(d){
       return d[0];
     })
@@ -35,9 +60,43 @@ Racer.prototype.render = function(){
     })
     .attr('x', function(d){
       return d[2];
-    })
-
+    });
 }
 
-var racer = new Racer();
-racer.render();
+//pass in backbone syntax new Racer({model: model})
+var Racer = function (player) {
+  this.model = player.model;
+}
+
+var RacerModel = function(correct){
+  this.model = {
+    numCorrect: correct,
+    get: function(key){
+      return this[key];
+    }
+  }
+}
+
+var player = new RacerModel(20);
+var opponent = new RacerModel(20);
+var count = 0;
+
+var game = new GameScreen(600, 300, 60, player, opponent);
+game.initialize();
+game.render();
+
+setInterval(function(){
+  if(count % 3 === 0){
+    player.model.numCorrect += 4;
+    opponent.model.numCorrect += 1;
+  }
+  else {
+    player.model.numCorrect += 2;
+    opponent.model.numCorrect += 3;
+  }
+  count++;
+}, 100);
+
+setInterval(function(){
+  game.render();
+}, 500)
