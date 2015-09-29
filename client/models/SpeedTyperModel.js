@@ -21,7 +21,7 @@ var SpeedTyperModel = Backbone.Model.extend({
   gameOver: function (data) {
     //game over handler
 
-  }
+  },
 
   initialize: function () {
     // TODO: GET request to server for paragraph text
@@ -34,8 +34,8 @@ var SpeedTyperModel = Backbone.Model.extend({
     this.get('socket').on('connect', function () {
       console.log("Connected!");
     })
-    this.get('socket').on('update', updateOpponent)
-    this.get('socket').on('gameOver', gameOver)
+    this.get('socket').on('update', this.updateOpponent)
+    this.get('socket').on('gameOver', this.gameOver)
     // this.get(socket)
     this.set('paragraphArray', this.get('paragraph').split(' '));
     this.updateCurrentLine();
