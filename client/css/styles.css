@@ -17,3 +17,7 @@ body {
 .noOutline {
   outline: none;
 }
+
+.currentWord {
+  background-color: white;
+}
