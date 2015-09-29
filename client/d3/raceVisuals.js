@@ -27,8 +27,6 @@ GameScreen.prototype.initialize = function () {
 }
 
 GameScreen.prototype.render = function () { 
-  console.log(this.player.model);
-  console.log(this.opponent.model);
 
   var total = this.player.model.get('numCorrect') + this.opponent.model.get('numCorrect');
 
@@ -43,8 +41,6 @@ GameScreen.prototype.render = function () {
   var data = []
   data.push(playerData);
   data.push(opponentData);
-
-  console.log(data);
 
   var svg = d3.select('svg')
 
@@ -85,22 +81,22 @@ var game = new GameScreen(600, 300, 60, player, opponent);
 game.initialize();
 game.render();
 
-setInterval(function(){
-  if(count % 3 === 0){
-    player.model.numCorrect += 4;
-    opponent.model.numCorrect += 1;
-  }
-  else if (count % 5 === 0){
-    player.model.numCorrect += 1;
-    opponent.model.numCorrect += 9; 
-  }
-  else {
-    player.model.numCorrect += 2;
-    opponent.model.numCorrect += 3;
-  }
-  count++;
-}, 100);
+// setInterval(function(){
+//   if(count % 3 === 0){
+//     player.model.numCorrect += 4;
+//     opponent.model.numCorrect += 1;
+//   }
+//   else if (count % 5 === 0){
+//     player.model.numCorrect += 1;
+//     opponent.model.numCorrect += 9; 
+//   }
+//   else {
+//     player.model.numCorrect += 2;
+//     opponent.model.numCorrect += 3;
+//   }
+//   count++;
+// }, 100);
 
-setInterval(function(){
-  game.render();
-}, 500)
+// setInterval(function(){
+//   game.render();
+// }, 500)
