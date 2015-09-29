@@ -14,6 +14,10 @@ body {
   outline-color: red;
 }
 
-.noOutline {
+.noOutline { 
   outline: none;
+}
+
+.currentWord {
+  background-color: white;
 }
