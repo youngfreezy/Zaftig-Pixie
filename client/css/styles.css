@@ -14,7 +14,7 @@ body {
   outline-color: red;
 }
 
-.noOutline {
+.noOutline { 
   outline: none;
 }
 

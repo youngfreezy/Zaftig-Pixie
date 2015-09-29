@@ -2,7 +2,7 @@ var StatsView = Backbone.View.extend({
   
   tagName: "div",
 
-  className: "statsView",
+  className: "statsView", 
 
   initialize: function ( params ) {
     this.model.on('update', this.render, this);

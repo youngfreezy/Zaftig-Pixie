@@ -16,6 +16,6 @@ var SpeedTyperView = Backbone.View.extend({
       this.statsView.$el,
       this.inputView.$el, 
       this.paragraphView.$el
-    ]);
+    ]); 
   }
 });

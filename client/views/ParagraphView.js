@@ -4,9 +4,9 @@ var ParagraphView = Backbone.View.extend({
 
   className: "paragraphText",
 
-  initialize: function () {
+  initialize: function () { 
     this.model.on('change:currentIndex', this.updateCurrent, this);
-    
+
     this.render();
   },
 
