@@ -38,7 +38,7 @@ GameScreen.prototype.render = function () {
   var difference = this.player.model.get('numCorrect') - this.opponent.model.get('numCorrect')
 
   var playerData = [scale(this.threshold/2 + difference), '#CA59DE', 0];
-  var opponentData = [scale(this.threshold/2 + difference), '#46E3E3', scale(this.threshold/2 + difference)];
+  var opponentData = [scale(this.threshold - (this.threshold/2 + difference)), '#46E3E3', scale(this.threshold/2 + difference)];
 
   var data = []
   data.push(playerData);
@@ -89,6 +89,10 @@ setInterval(function(){
   if(count % 3 === 0){
     player.model.numCorrect += 4;
     opponent.model.numCorrect += 1;
+  }
+  else if (count % 5 === 0){
+    player.model.numCorrect += 1;
+    opponent.model.numCorrect += 9; 
   }
   else {
     player.model.numCorrect += 2;
