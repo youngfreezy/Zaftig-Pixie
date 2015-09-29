@@ -4,10 +4,13 @@
       <link rel="stylesheet" type="text/css" href="css/styles.css" />
     </head>
     <body>
-      <script src="../bower_components/jquery/jquery.min.js"> </script>
-      <script src="../bower_components/underscore/underscore.js"> </script>
-      <script src="../bower_components/backbone/backbone.js"> </script>
+      <script src="./bower_components/jquery/jquery.min.js"></script>
+      <script src="./bower_components/underscore/underscore.js"></script>
+      <script src="./bower_components/backbone/backbone.js"></script>
+      <script src="./bower_components/d3/d3.min.js"></script>
+      <script src="./socket.io-client/socket.io.js"></script> 
 
+      <script src="./d3/raceVisuals.js"></script>
       <script src="models/AppModel.js"></script>
       <script src="models/GameDisplayModel.js"></script>
       <script src="models/SpeedTyperModel.js"></script>
@@ -17,10 +20,11 @@
       <script src="views/InputView.js"></script>
       <script src="views/ParagraphView.js"></script>
       <script src="views/GameDisplayView.js"></script>
+      <script src="views/GameContainerView.js"></script>
       <script src="views/SpeedTyperView.js"></script>
 
 
-      <script> 
+      <script>  
       /*
        *  Instantiate App Model and Views
        *  render views and append them to body
