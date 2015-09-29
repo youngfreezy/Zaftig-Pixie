@@ -1,16 +1,16 @@
-var GameScreen = function (width, height, threshold, player, opponent) {
+var GameScreen = function (width, height, threshold) {
   this.width = width;
   this.height = height;
   this.threshold = threshold;
 
-  this.player = new Racer(player);
-  this.opponent = new Racer(opponent);
+  // this.player = new Racer(player);
+  // this.opponent = new Racer(opponent);
 }
 
 GameScreen.prototype.initialize = function () {
   var div = d3.select('body')
-              .append('div')
-              .attr('id', 'competition')
+              // .append('div')
+              // .attr('id', 'competition')
               .append('svg:svg')
               .attr('width', this.width)
               .attr('height', this.height)
@@ -26,14 +26,15 @@ GameScreen.prototype.initialize = function () {
     .append('rect')
 }
 
-GameScreen.prototype.render = function () { 
+GameScreen.prototype.render = function (playerScore, oppScore) { 
 
-  var total = this.player.model.get('numCorrect') + this.opponent.model.get('numCorrect');
+  // var total = this.player.model.get('numCorrect') + this.opponent.model.get('numCorrect');
 
   // function to scale the score based on the width of the svg
   var scale = d3.scale.linear().domain([0, this.threshold]).range([0, this.width]);
 
-  var difference = this.player.model.get('numCorrect') - this.opponent.model.get('numCorrect')
+  // var difference = this.player.model.get('numCorrect') - this.opponent.model.get('numCorrect')
+  var difference = playerScore - oppScore;
 
   var playerData = [scale(this.threshold/2 + difference), '#CA59DE', 0];
   var opponentData = [scale(this.threshold - (this.threshold/2 + difference)), '#46E3E3', scale(this.threshold/2 + difference)];
@@ -73,13 +74,13 @@ var RacerModel = function(correct){
   }
 }
 
-var player = new RacerModel(20);
-var opponent = new RacerModel(20);
-var count = 0;
+// var player = new RacerModel(20);
+// var opponent = new RacerModel(20);
+// var count = 0;
 
-var game = new GameScreen(600, 300, 60, player, opponent);
-game.initialize();
-game.render();
+// var game = new GameScreen(600, 300, 60, player, opponent);
+// game.initialize();
+// game.render();
 
 // setInterval(function(){
 //   if(count % 3 === 0){

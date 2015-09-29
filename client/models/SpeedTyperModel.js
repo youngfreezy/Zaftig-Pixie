@@ -7,14 +7,36 @@ var SpeedTyperModel = Backbone.Model.extend({
     // splitParagraph: this.get('paragraph').split(' '),
     numMissed: 0,
     numCorrect: 0,
+    oppScore: 0,
     currentIndex: 0,
     wpm: 0
   },
+
+  updateOpponent: function(data) {
+    //set oppscore to data
+    // data -> { score: # }
+    this.set('oppScore', data.score);
+  },
+
+  gameOver: function (data) {
+    //game over handler
+
+  }
 
   initialize: function () {
     // TODO: GET request to server for paragraph text
     this.startGame();
 
+    //Initialize socket
+
+    this.set('socket', io.connect("http://localhost:3000"))
+
+    this.get('socket').on('connect', function () {
+      console.log("Connected!");
+    })
+    this.get('socket').on('update', updateOpponent)
+    this.get('socket').on('gameOver', gameOver)
+    // this.get(socket)
     this.set('paragraphArray', this.get('paragraph').split(' '));
     this.updateCurrentLine();
     this.updateNextLine();
@@ -30,6 +52,8 @@ var SpeedTyperModel = Backbone.Model.extend({
     if( inputWord === this.get('paragraphArray')[this.get('currentIndex')] ){
       this.set( 'numCorrect', this.get('numCorrect') + 1 );
       this.set( 'prevResult', 'correct');
+      //Send score to socket
+      this.get('socket').emit('update', { score: this.get('numCorrect') });
     } else {
       this.set( 'numMissed', this.get('numMissed') + 1 );
       this.set( 'prevResult', 'incorrect');
