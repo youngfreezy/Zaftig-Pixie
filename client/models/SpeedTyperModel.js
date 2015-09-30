@@ -9,7 +9,8 @@ var SpeedTyperModel = Backbone.Model.extend({
     numCorrect: 0,
     oppScore: 0,
     currentIndex: 0,
-    wpm: 0
+    wpm: 0,
+    gameOver: false
   },
 
   updateOpponent: function(data) {
@@ -20,7 +21,7 @@ var SpeedTyperModel = Backbone.Model.extend({
 
   gameOver: function (data) {
     //game over handler
-
+    this.set('gameOver', true);
   },
 
   initialize: function () {
@@ -29,13 +30,15 @@ var SpeedTyperModel = Backbone.Model.extend({
 
     //Initialize socket
 
-    this.set('socket', io.connect("http://localhost:3000"))
+    this.set('socket', io.connect("http://localhost:3000"));
 
     this.get('socket').on('connect', function () {
       console.log("Connected!");
     })
     this.get('socket').on('update', this.updateOpponent)
     this.get('socket').on('gameOver', this.gameOver)
+    //socket listener - startGame countdown
+    
     // this.get(socket)
     this.set('paragraphArray', this.get('paragraph').split(' '));
     this.updateCurrentLine();
