@@ -9,7 +9,8 @@ var GameDisplayView = Backbone.View.extend({
   initialize: function ( params ) {
     this.model.on('change:numCorrect', this.update, this);
     this.model.on('change:oppScore', this.update, this);
-    this.game = new GameScreen(600, 300, 40)
+    this.model.on('change:gameOver', this.gameOver, this);
+    this.game = new GameScreen(600, 100, 40);
     this.game.initialize();
     this.render();
   },
@@ -20,6 +21,14 @@ var GameDisplayView = Backbone.View.extend({
 
   update: function() {
     this.game.render(this.model.get('numCorrect'), this.model.get('oppScore'));
+  },
+
+  gameStart: function() {
+
+  },
+
+  gameOver: function() {
+    //render something on game over
   }
   
 });

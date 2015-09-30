@@ -3,13 +3,15 @@ var SpeedTyperModel = Backbone.Model.extend({
   urlRoot: '/',
 
   defaults: { 
-    paragraph: 'hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer ',
+    // paragraph: 'hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer ',
+    paragraph: '',
     // splitParagraph: this.get('paragraph').split(' '),
     numMissed: 0,
     numCorrect: 0,
     oppScore: 0,
     currentIndex: 0,
-    wpm: 0
+    wpm: 0,
+    gameOver: false
   },
 
   updateOpponent: function(data) {
@@ -20,31 +22,54 @@ var SpeedTyperModel = Backbone.Model.extend({
 
   gameOver: function (data) {
     //game over handler
-
+    this.set('gameOver', true);
   },
 
   initialize: function () {
     // TODO: GET request to server for paragraph text
+
     this.startGame();
 
     //Initialize socket
 
-    this.set('socket', io.connect("http://localhost:3000"))
+    this.set('socket', io.connect("http://localhost:3000"));
 
     this.get('socket').on('connect', function () {
       console.log("Connected!");
     })
     this.get('socket').on('update', this.updateOpponent)
     this.get('socket').on('gameOver', this.gameOver)
+    //socket listener - startGame countdown
+    
     // this.get(socket)
     this.set('paragraphArray', this.get('paragraph').split(' '));
     this.updateCurrentLine();
     this.updateNextLine();
+
   },
 
   startGame: function() {
 
     this.set('startTime', Date.now());
+  },
+
+  fetchText: function() {
+    var that = this;
+
+    this.deferred = this.fetch({
+      url: '/text',
+      success: function(data, response){
+        return response.text;
+      }
+    })
+
+    // console.log(this.get('paragraph'));
+    this.deferred.done(function(data){
+      that.set('paragraph', data.text);
+      that.set('paragraphArray', that.get('paragraph').split(' '));
+      that.updateCurrentLine();
+      that.updateNextLine();
+    });
   },
 
   spaceHandler: function (inputWord) {
