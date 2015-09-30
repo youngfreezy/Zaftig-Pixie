@@ -48,6 +48,7 @@ GameScreen.prototype.render = function (playerScore, oppScore) {
   svg.selectAll('rect')
     .data(data)
     .transition()
+    .duration(400)
     .attr('width', function(d){
       return d[0];
     })

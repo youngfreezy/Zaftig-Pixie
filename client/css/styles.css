@@ -1,5 +1,19 @@
 body {
   background-color: #eee;
+  width: 100%;
+  font-size: 24px;
+}
+
+.container {
+  width: 800px;
+  margin: 0px auto;
+  text-align: center;
+  font-family: Arial;
+}
+
+svg {
+  margin: 100px auto 0 auto;
+  display: block;
 }
 
 .warning {
@@ -12,6 +26,16 @@ body {
 
 .incorrect {
   outline-color: red;
+}
+
+input { 
+  width: 400px;
+  height: 40px;
+  padding: 0px 7px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 .noOutline { 
