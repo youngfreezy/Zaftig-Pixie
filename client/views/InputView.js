@@ -2,7 +2,7 @@ var InputView = Backbone.View.extend({
   
   tagName: "input",
 
-  className: "noOutline",
+  className: "noOutline form-control",
 
   initialize: function () {
     this.render();
