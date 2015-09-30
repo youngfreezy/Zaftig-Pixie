@@ -34,11 +34,16 @@ var numberOfUsers = 0;
 
 io.on('connection', function (socket) {
 
+  // 'login' listener for 'login' event, emitted from AppView
   socket.on('login', function() {
     socketHandlers.loginUser(socket);
     numberOfUsers++;
     console.log('There are ' + numberOfUsers + ' users connected.');
     console.log('This is the users object: ', users);
+    if (numberOfUsers === 2) {
+      console.log('There are two users, emitting match.');
+      io.emit('match');
+    }
   });
 
   socket.on('update', function (data) {
@@ -54,7 +59,7 @@ io.on('connection', function (socket) {
       }
     });
   });
-  
+
 
     /* THIS LOGIC WILL BE IMPLEMENTED CLIENT SIDE?*/
   // socket.on('endGame', function (data) {
