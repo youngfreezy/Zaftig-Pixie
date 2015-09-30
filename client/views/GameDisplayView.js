@@ -10,7 +10,7 @@ var GameDisplayView = Backbone.View.extend({
     this.model.on('change:numCorrect', this.update, this);
     this.model.on('change:oppScore', this.update, this);
     this.model.on('change:gameOver', this.gameOver, this);
-    this.game = new GameScreen(600, 100, 40)
+    this.game = new GameScreen(600, 100, 40);
     this.game.initialize();
     this.render();
   },

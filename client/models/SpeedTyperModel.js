@@ -3,7 +3,8 @@ var SpeedTyperModel = Backbone.Model.extend({
   urlRoot: '/',
 
   defaults: { 
-    paragraph: 'hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer ',
+    // paragraph: 'hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer hello world I am fast typer ',
+    paragraph: '',
     // splitParagraph: this.get('paragraph').split(' '),
     numMissed: 0,
     numCorrect: 0,
@@ -26,6 +27,7 @@ var SpeedTyperModel = Backbone.Model.extend({
 
   initialize: function () {
     // TODO: GET request to server for paragraph text
+
     this.startGame();
 
     //Initialize socket
@@ -43,11 +45,31 @@ var SpeedTyperModel = Backbone.Model.extend({
     this.set('paragraphArray', this.get('paragraph').split(' '));
     this.updateCurrentLine();
     this.updateNextLine();
+
   },
 
   startGame: function() {
 
     this.set('startTime', Date.now());
+  },
+
+  fetchText: function() {
+    var that = this;
+
+    this.deferred = this.fetch({
+      url: '/text',
+      success: function(data, response){
+        return response.text;
+      }
+    })
+
+    // console.log(this.get('paragraph'));
+    this.deferred.done(function(data){
+      that.set('paragraph', data.text);
+      that.set('paragraphArray', that.get('paragraph').split(' '));
+      that.updateCurrentLine();
+      that.updateNextLine();
+    });
   },
 
   spaceHandler: function (inputWord) {
