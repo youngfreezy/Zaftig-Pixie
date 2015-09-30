@@ -42,9 +42,9 @@ io.on('connection', function (socket) {
   });
 
   socket.on('update', function (data) {
-    // console.log('Update fired, this is the score: \n\n\n', socket.userData);
+    console.log('Update fired, this is the data passed in: \n\n\n', data);
     // update the other users with this user's data
-    socketHandlers.updateScore(socket, data, function (socket) {
+    socketHandlers.updateScore(socket, data, function () {
       // save the result of checkForEndGame to see if we will emit an update event or not
       var endGameStatus = socketHandlers.checkForEndGame(socket);
       console.log('This is the endGameStatus: ', endGameStatus);
