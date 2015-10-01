@@ -78,7 +78,7 @@ module.exports.text = function (request, response) {
     return result;
   }
   // Hit API for data, correct errors, serve to client
-  req('http://api.icndb.com/jokes/random/6', function (error, res, body) {
+  req('http://api.icndb.com/jokes/random/50', function (error, res, body) {
     var data = {}
     var jokes = [];
     var parsedBody = JSON.parse(body);
