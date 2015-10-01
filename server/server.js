@@ -39,34 +39,25 @@ io.on('connection', function (socket) {
     socketHandlers.loginUser(socket);
     numberOfUsers++;
     console.log('There are ' + numberOfUsers + ' users connected.');
-    console.log('This is the users object: ', users);
+    console.log('This is the users object:\n', users);
     if (numberOfUsers === 2) {
-      console.log('There are two users, emitting match.');
+      console.log('\nThere are two users, emitting "match" event.\n');
       io.emit('match');
     }
   });
 
   socket.on('update', function (data) {
-    console.log('Update fired, this is the data passed in: \n\n\n', data);
-    // update the other users with this user's data
+    console.log('Update fired, this is the data passed in: \n', data);
+    // update the opponent with this user's data
     socketHandlers.updateScore(socket, data, function () {
       // save the result of checkForEndGame to see if we will emit an update event or not
       var endGameStatus = socketHandlers.checkForEndGame(socket);
-      console.log('This is the endGameStatus: ', endGameStatus);
       if (endGameStatus === 'noWinner') {  // if there was no winner, 
         // update the opponent with this socket's score
         socket.broadcast.emit('update', data);
       }
     });
   });
-
-
-    /* THIS LOGIC WILL BE IMPLEMENTED CLIENT SIDE?*/
-  // socket.on('endGame', function (data) {
-  //   // update the other users with the end game results
-  //   socket.broadcast.emit('endGame', data);
-  // });
-
 
 }); 
 
