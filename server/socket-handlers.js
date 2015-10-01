@@ -10,40 +10,32 @@ var loginUser = function (socket) {
   // create a userData property which points to this
   // socket's data in the server's user cache
   socket.userData = server.users[username];
-  console.log('\n\nThis is the socket we\'ve made! \n', socket.userData.socketId);
 }
 
 var updateScore = function (socket, data, callback) {
   // update score
-  // server.users[socket.userData.username].score = data.score;
   socket.userData.score = data.score;
   console.log('\n\n This is the server cache after socket update: \n', server.users);
-  // run the callback to keep asynchronous execution in order
+  // run the callback, specified in the 'update' listener on server.js
   callback(socket);
 }
 
 var checkForEndGame = function (socket) {
-  // save socket ids
-  var currentSocketId = socket.userData.socketId;
-  var opponentSocketId;
-  // save scores for comparison
-  var currentUserScore = socket.userData.score;
-  var opponentScore;
-  // save opponent data
+  // save each user's data object
+  var currentSocketData = socket.userData;
+  var opponentSocketData;
+  // populate opponentSocketData from the server cache
   for (var user in server.users) {
-    if (server.users[user].socketId !== currentSocketId) {
-      opponentSocketId = server.users[user].socketId;
-      opponentScore = server.users[user].score;
+    if (server.users[user].socketId !== currentSocketData.socketId) {
+      opponentSocketData = server.users[user];
     }
   }
-
-  console.log('This is the current socket.id:\n',socket.id);
   // compare scores, emit proper events to proper clients
-  if (currentUserScore - opponentScore >= 4) {
+  if (currentSocketData.score - opponentSocketData.score >= 4) {
     socket.emit('win');
     socket.broadcast.emit('lose');
     return 'user1Winner';
-  } else if (opponentScore - currentUserScore >= 4) {
+  } else if (opponentSocketData.score - currentSocketData.score >= 4) {
     socket.emit('lose');
     socket.broadcast.emit('win');
     return 'user2Winner';
