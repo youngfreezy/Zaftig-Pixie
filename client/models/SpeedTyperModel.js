@@ -16,7 +16,7 @@ var SpeedTyperModel = Backbone.Model.extend({
 
   initialize: function () {
     // TODO: GET request to server for paragraph text
-    this.startGame();
+    this.startGame(); 
 
     //Initialize socket
 
@@ -28,6 +28,7 @@ var SpeedTyperModel = Backbone.Model.extend({
     this.get('socket').on('update', this.updateOpponent.bind(this));
     this.get('socket').on('win', this.gameWin.bind(this));
     this.get('socket').on('lose', this.gameLose.bind(this));
+    this.get('socket').on('match', this.beginGame.bind(this));
     //socket listener - startGame countdown
     
     // this.get(socket)
@@ -35,6 +36,11 @@ var SpeedTyperModel = Backbone.Model.extend({
     this.updateCurrentLine();
     this.updateNextLine();
 
+  },
+
+  beginGame: function() {
+    this.set('startTime', Date.now());
+    this.trigger("beginGame", "true");
   },
 
   updateOpponent: function(data) {
@@ -45,16 +51,18 @@ var SpeedTyperModel = Backbone.Model.extend({
 
   gameWin: function () {
     //game over handler
+    alert('Game Won');
     this.set('gameOver', true);
   },
 
   gameLose: function () {
-
+    alert('Game lost');
+    this.set('gameOver', true);
   },
 
   startGame: function() {
 
-    this.set('startTime', Date.now());
+    
   },
 
   fetchText: function() {

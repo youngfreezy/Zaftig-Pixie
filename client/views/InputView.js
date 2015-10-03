@@ -6,6 +6,8 @@ var InputView = Backbone.View.extend({
 
   initialize: function () {
     this.render();
+    this.model.bind("beginGame", this.beginGame.bind(this));
+    this.$el.prop("disabled", true);
   }, 
 
   events: {
@@ -25,6 +27,11 @@ var InputView = Backbone.View.extend({
   render: function () {
     return this.$el;
   }, 
+
+  beginGame: function () {
+    alert('begin');
+    this.$el.prop("disabled", false);
+  },
 
   spacePressHandler: function (e) {
     var currentInput = e.target.value;
