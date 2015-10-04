@@ -56,8 +56,6 @@ describe("login behavior tests", function() {
   beforeEach(function(done) {
     // instantiate a fake client
     socket = io.connect("http://localhost:3000", options);
-
-    // console.log('This is the socket we think is connected:\n', socket.io);
     // add listener to fake client
     socket.on('connect', function () {
       console.log('This is server.users.numberOfUsers in the before hook: \n', server.users.numberOfUsers);
