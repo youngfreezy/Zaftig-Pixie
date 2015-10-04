@@ -19,6 +19,7 @@ app.use(parser.json());
 // Serve the client files
 app.use(express.static(__dirname + "/../client"));
 
+
 // If we are being run directly, run the server.
 if (!module.parent) {
   http.listen(app.get("port"));
@@ -27,8 +28,7 @@ if (!module.parent) {
 
 /*----------  Server Cache  ----------*/
 
-var users = {};
-var numberOfUsers = 0;
+var users = { numberOfUsers: 0 };
 
 /*----------  Socket listeners  ----------*/
 
@@ -37,13 +37,13 @@ io.on('connection', function (socket) {
   // 'login' listener for 'login' event, emitted from AppView
   socket.on('login', function() {
     socketHandlers.loginUser(socket);
-    numberOfUsers++;
+    users.numberOfUsers++;
 
-    console.log('There are ' + numberOfUsers + ' users connected.');
+    console.log('There are ' + users.numberOfUsers + ' users connected.');
     console.log('This is the users object:\n', users);
 
     // If there are enough users to play, emit 'match' event to all sockets
-    if (numberOfUsers === 2) {
+    if (users.numberOfUsers === 2) {
       console.log('\nThere are two users, emitting "match" event.\n');
       io.emit('match');
     }
@@ -82,4 +82,3 @@ app.use('/register', handlers.register);
 app.use('/text', handlers.text);
 
 module.exports.users = users;
-module.exports.numberOfUsers = numberOfUsers;
