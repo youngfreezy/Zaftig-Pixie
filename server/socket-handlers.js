@@ -4,7 +4,7 @@ var _ = require('./node_modules/underscore/underscore');
 var loginUser = function (socket) {
   // assign a new, uniquely ID'd user object
   var keys = Object.keys(server.users);
-  var username = 'user' + (keys.length + 1);
+  var username = 'user' + (keys.length);
   // save a new userID to the server's user cache
   server.users[username] = {score: 0, socketId: socket.id};
   // create a userData property which points to this
