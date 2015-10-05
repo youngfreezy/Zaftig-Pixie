@@ -32,17 +32,7 @@
 
 
       <script>  
-      /*
-       *  Instantiate App Model and Views
-       *  render views and append them to body
-       */
        $(function() {
-          
-          //app view splits screen into two new views:
-          //  top half -> DataVisView
-          //  bottom half -> GameView
-
-
           var app = new AppModel();
           var appView = new AppView({model: app});
           $('body').append(appView.render());
