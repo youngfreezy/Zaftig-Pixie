@@ -1,3 +1,7 @@
+/*
+* SpeedTyperView is a container for the interactive player portion of the
+*  game, which exist in statsView, inputView and paragraphView.
+*/
 var SpeedTyperView = Backbone.View.extend({
   
   tagName: "div",
