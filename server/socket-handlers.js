@@ -31,11 +31,11 @@ var checkForEndGame = function (socket) {
     }
   }
   // compare scores, emit proper events to proper clients
-  if (currentSocketData.score - opponentSocketData.score >= 5) {
+  if (currentSocketData.score - opponentSocketData.score >= 20) {
     socket.emit('win');
     socket.broadcast.emit('lose');
     return 'user1Winner';
-  } else if (opponentSocketData.score - currentSocketData.score >= 5) {
+  } else if (opponentSocketData.score - currentSocketData.score >= 20) {
     socket.emit('lose');
     socket.broadcast.emit('win');
     return 'user2Winner';

@@ -55,11 +55,9 @@ io.on('connection', function (socket) {
     socketHandlers.updateScore(socket, data, function () {
       // save the result of checkForEndGame to see if it 
       // is necessary to emit an update event
+      socket.broadcast.emit('update', data);
       var endGameStatus = socketHandlers.checkForEndGame(socket);
-      if (endGameStatus === 'noWinner') { // if there was no winner, 
-        // update the opponent with this socket's score
-        socket.broadcast.emit('update', data);
-      }
+
     });
   });
 
