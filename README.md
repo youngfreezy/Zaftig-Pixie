@@ -20,13 +20,13 @@ Pioneering project in speed type tech
 
 ## Usage
 
-> Navigate to /server and run:
+Navigate to /server and run:
 
 ```sh
 node server.js
 ```
 
-> When 2 users connect at http://localhost:3000, game will be started.
+When 2 users connect at http://localhost:3000, game will be started.
 
 ## Requirements
 
