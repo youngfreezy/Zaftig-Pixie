@@ -1,32 +1,44 @@
 # Zaftig-Pixie
 Pioneering project in speed type tech
 
+
+## Table of Contents
+
+1. [Team](#team)
+1. [Usage](#usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
+    1. [Roadmap](#roadmap)
+1. [Contributing](#contributing)
+
 ## Team
 
   - __Product Owner__: Jing
   - __Scrum Master__: Nate
   - __Development Team Members__: Simon, Kevin
 
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
-
 ## Usage
 
-> Some usage instructions
+Navigate to /server and run:
+
+```sh
+node server.js
+```
+
+When 2 users connect at http://localhost:3000, game will be started.
 
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-
+- MongoDB 2.0.45
+- Express 4.13.3
+- Mocha 1.21.4
+- Backbone 1.0.0
+- JQuery 2.0.3
+- Underscore 1.x.x
+- d3 3.5.6
+- Socket.io 3.3.5
 
 ## Development
 
@@ -35,14 +47,14 @@ Pioneering project in speed type tech
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
+npm install -g bower
 npm install
 bower install
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project storyboard [here](https://waffle.io/ZAFTIG-PIXIE/Zaftig-Pixie)
 
 
 ## Contributing

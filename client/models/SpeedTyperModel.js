@@ -41,7 +41,7 @@ var SpeedTyperModel = Backbone.Model.extend({
     * Initialize socket, set it on the model and put
     * a connect handler on it.
     */
-    this.set('socket', io.connect('http://localhost:3000'));
+    this.set('socket', io.connect(window.location.host));
     this.get('socket').on('connect', function () {
       console.log('Connected!');
     })
