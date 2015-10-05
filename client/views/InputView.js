@@ -18,6 +18,11 @@ var InputView = Backbone.View.extend({
     this.model.bind("beginGame", this.beginGame.bind(this));
     this.$el.prop("disabled", true);
 
+    /*
+    * Add a game over event listener to disable the input box so they cannot
+    * type
+    */
+    this.model.on('change:gameOver', this.disableInput, this);
   }, 
 
   events: {
@@ -50,7 +55,7 @@ var InputView = Backbone.View.extend({
   *   has begun, allowing the user to begin typing.
   */
   beginGame: function () {
-    alert('begin');
+    // alert('begin');
     this.$el.prop("disabled", false);
   },
 
@@ -79,6 +84,14 @@ var InputView = Backbone.View.extend({
     } else {
       this.$el.removeClass("warning");
     }
+  },
+
+  /* 
+  * disableInput turns the "disabled" property on the input element to true so
+  * user cannot type
+  */
+  disableInput: function () {
+    this.$el.prop("disabled", true);
   }
 
 });

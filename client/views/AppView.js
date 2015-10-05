@@ -8,6 +8,8 @@ var AppView = Backbone.View.extend({
     */
     this.gameContainerView = new GameContainerView({model: this.model.get('speedTyper')});
     this.speedTyperView = new SpeedTyperView({model: this.model.get('speedTyper')});
+
+
   },
 
   render: function(){
@@ -17,7 +19,6 @@ var AppView = Backbone.View.extend({
     */
     this.model.get('speedTyper').get('socket').emit('login');
     return this.$el.html([
-      "<h2>Start Typing</h2>",
       this.gameContainerView.$el,
       this.speedTyperView.$el
       ]);
