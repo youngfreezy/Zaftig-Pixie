@@ -45,3 +45,7 @@ input {
 .currentWord {
   background-color: white;
 }
+
+input:disabled {
+  background-color: #eee;
+}

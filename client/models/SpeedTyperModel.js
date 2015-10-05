@@ -94,13 +94,15 @@ var SpeedTyperModel = Backbone.Model.extend({
   *   situations.
   */
   gameWin: function () {
-    alert('Game Won');
+    // alert('Game Won');
     this.set('gameOver', true);
+    this.trigger('gameWin');
   },
 
   gameLose: function () {
-    alert('Game lost');
+    // alert('Game lost');
     this.set('gameOver', true);
+    this.trigger('gameLose');
   },
 
   startGame: function() {
