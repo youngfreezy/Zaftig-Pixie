@@ -4,12 +4,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-casperjs');
+  grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-mocha-test');
 
 
   // in what order should the files be concatenated
@@ -47,12 +48,20 @@ module.exports = function(grunt) {
       }
     },
 
+    cssmin: {
+        // Add filespec list here
+      target: {
+        src: 'client/css/styles.css',
+        dest: 'dist/client/css/styles.min.css'
+      }
+    },
+
     // copy necessary files to our dist folder
     copy: {
       // create a task for client files
       client: {
         // Copy everything but the to-be-concatenated todo JS files
-        src: [ 'client/**', '!client/scripts/todo/**' ],
+        src: [ 'client/**', '!client/d3/**', '!client/models/**', '!client/views/**', '!client/css/**' ],
         dest: 'dist/'
       },
       // create a task for server files
@@ -68,8 +77,8 @@ module.exports = function(grunt) {
         files: {
           'dist/client/lib/lib.js': [
             './bower_components/jquery/jquery.min.js',
-            './bower_components/underscore/underscore.js',
-            './bower_components/backbone/backbone.js',
+            './bower_components/underscore/underscore-min.js',
+            './bower_components/backbone/backbone-min.js',
             './bower_components/d3/d3.min.js',
             './bower_components/socket.io-client/socket.io.js'
           ]
@@ -77,7 +86,7 @@ module.exports = function(grunt) {
       },
       game: {
         files: {
-          // concat all the todo js files into one file
+          // concat all the speed-typer js files into one file
           'dist/client/scripts/game.js': clientIncludeOrder
         }
       }
@@ -92,28 +101,18 @@ module.exports = function(grunt) {
       }
     },
 
-    // configure karma
-    karma: {
-      options: {
-        configFile: 'karma.conf.js',
-        reporters: ['progress', 'coverage']
-      },
-      // Watch configuration
-      watch: {
-        background: true,
-        reporters: ['progress']
-      },
-      // Single-run configuration for development
-      single: {
-        singleRun: true,
-      },
-      // Single-run configuration for CI
-      ci: {
-        singleRun: true,
-        coverageReporter: {
-          type: 'lcov',
-          dir: 'results/coverage/'
-        }
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['test/integration/*.js']
+      }
+    },
+
+    nodemon: {
+      dev: {
+        script: 'server/server.js'
       }
     },
 
@@ -121,49 +120,46 @@ module.exports = function(grunt) {
     // any changes to the following files
     watch: {
       gruntfile: {
-        files: 'Gruntfile.js',
-        tasks: 'jshint:gruntfile'
+        files: 'Gruntfile.js'
       },
       client: {
         files: [ 'client/**' ],
-        // tasks: [ 'build', 'karma:watch:run', 'casperjs' ]
-        tasks: [ 'build', 'karma:watch:run' ]
+        tasks: [ 'build' ]
       },
       server: {
         files: [ 'server/**' ],
         // tasks: [ 'build', 'express:dev', 'casperjs' ],
-        tasks: [ 'build', 'express:dev' ],
+        tasks: [ 'build', 'express:dev', 'mochaTest' ],
         options: {
           spawn: false // Restart server
         }
-      },
-      unitTests: {
-        files: [ 'test/unit/**/*.js' ],
-        tasks: [ 'karma:watch:run' ]
-      },
-      integrationTests: {
-        files: [ 'test/integration/**/*.js' ],
-        tasks: [ 'karma:watch:run' ]
       }
     }
   });
 
+  grunt.registerTask('server-dev', function (target) {
+    // Running nodejs in a different process and displaying output on the main console
+    var nodemon = grunt.util.spawn({
+         cmd: 'grunt',
+         grunt: true,
+         args: 'nodemon'
+    });
+    nodemon.stdout.pipe(process.stdout);
+    nodemon.stderr.pipe(process.stderr);
+
+    grunt.task.run([ 'watch' ]);
+  });
+
   // Perform a build
-  grunt.registerTask('build', [ 'jshint', 'clean', 'copy', 'concat', 'uglify']);
-
-  // Run client tests once
-  grunt.registerTask('testClient', [ 'karma:single' ]);
-
-  // Run server tests once
-  // TODO: Backend team create task
-  grunt.registerTask('testServer', [ 'karma:single' ]);
+  grunt.registerTask('build', [ 'clean', 'copy', 'concat', 'uglify', 'cssmin' ]);
 
   // Run all tests once
-  grunt.registerTask('test', [ 'testClient', 'teste2e']);
+  grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
 
-  // Run all tests once
-  grunt.registerTask('ci', [ 'karma:ci', 'express:dev', 'casperjs' ]);
+  // Start watching and run tests when files concathange
+  grunt.registerTask('default', [ 'build', 'express:dev', 'watch' ]);
 
-  // Start watching and run tests when files change
-  grunt.registerTask('default', [ 'build', 'express:dev', 'karma:watch:start', 'watch' ]);
+  // Deployment
+  // TODO: Create 'upload' task to upload to heroku
+  grunt.registerTask('deploy', [ 'build', 'upload' ])
 };
