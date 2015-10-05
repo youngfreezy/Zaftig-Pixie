@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 
     // uglify the files
     uglify: {
-      todo: {
+      speedTyper: {
         files: {
           'dist/client/scripts/game.js': clientIncludeOrder
         }
@@ -117,16 +117,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // configure casperjs
-    // casperjs: {
-    //   options: {},
-    //   e2e: {
-    //     files: {
-    //       'results/casper': 'test/e2e/**/*.js'
-    //     }
-    //   }
-    // },
-
     // create a watch task for tracking
     // any changes to the following files
     watch: {
@@ -155,18 +145,11 @@ module.exports = function(grunt) {
         files: [ 'test/integration/**/*.js' ],
         tasks: [ 'karma:watch:run' ]
       }
-      // e2eTests: {
-      //   files: [ 'test/e2e/**/*.js' ],
-      //   tasks: [ 'casperjs' ]
-      // }
     }
   });
 
   // Perform a build
   grunt.registerTask('build', [ 'jshint', 'clean', 'copy', 'concat', 'uglify']);
-
-  // Run e2e tests once
-  // grunt.registerTask('teste2e', [ 'express:dev', 'casperjs' ]);
 
   // Run client tests once
   grunt.registerTask('testClient', [ 'karma:single' ]);
