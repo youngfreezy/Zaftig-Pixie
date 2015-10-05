@@ -1,3 +1,7 @@
+/*
+* StatsView listens to the model and displays the current 
+*   player statistics on the page as they are updated.
+*/
 var StatsView = Backbone.View.extend({
   
   tagName: "div",
@@ -6,12 +10,10 @@ var StatsView = Backbone.View.extend({
 
   initialize: function ( params ) {
     this.model.on('update', this.render, this);
-    console.log("initalize");
     this.render();
   },
 
   render: function () {
-    console.log('wpm changed');
     return this.$el.html([
       'wpm: ' + Math.floor(this.model.get('wpm')),
       ', correct: ' + this.model.get('numCorrect'),

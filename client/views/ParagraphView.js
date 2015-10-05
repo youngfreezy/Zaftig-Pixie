@@ -1,3 +1,8 @@
+/*
+* ParagraphView contains the two lines of text shown to the user
+*   as the text to be typed.
+*/
+
 var ParagraphView = Backbone.View.extend({ 
 
   tagName: "div",
@@ -12,25 +17,33 @@ var ParagraphView = Backbone.View.extend({
     this.render();
   },
 
+  /*
+  * render grabs the current and next lines from the model and 
+  *   displays the in the html.
+  */
   render: function () {
-    // return this.$el.html([
-    //   this.model.get('paragraphArray')[this.model.get('currentIndex')] + " ",
-    //   this.model.get('paragraphArray')[this.model.get('currentIndex') + 1] + " ",
-    //   this.model.get('paragraphArray')[this.model.get('currentIndex') + 2] + " ",
-    //   this.model.get('paragraphArray')[this.model.get('currentIndex') + 3] + " ",
-    //   this.model.get('paragraphArray')[this.model.get('currentIndex') + 4]
-    //   ]);
     return this.$el.html([
       "<p>" + this.model.get('currentLine').join(" ") + "</p>",
       "<p>" + this.model.get('nextLine').join(" ") + "</p>"
       ]);
   }, 
 
+  /*  
+  * updateLines tells the model to recalculate the current and next line.
+  * updateLines is called by 'updateCurrent' every five iterations, when
+  *   the end of the current line is reached.
+  */
   updateLines: function () {
     this.model.updateCurrentLine();
     this.model.updateNextLine();
   }, 
 
+  /*
+  * updateCurrent checks if we've iterated five words and calls 
+  *   updateLines to display the correct lines.
+  * updateCurrent also adds a 'currentWord' class to the current word which
+  *   highlights that word for the user.
+  */
   updateCurrent: function () {
     var index = this.model.get('currentIndex');
     var lineIndex = index % 5;
