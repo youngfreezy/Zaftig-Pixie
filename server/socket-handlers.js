@@ -1,5 +1,5 @@
 var server = require('./server');
-var _ = require('./node_modules/underscore/underscore');
+var _ = require('../node_modules/underscore/underscore');
 
 var loginUser = function (socket) {
   // assign a new, uniquely ID'd user object
