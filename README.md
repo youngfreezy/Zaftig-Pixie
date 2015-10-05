@@ -1,21 +1,22 @@
 # Zaftig-Pixie
 Pioneering project in speed type tech
 
+
+## Table of Contents
+
+1. [Team](#team)
+1. [Usage](#Usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
+    1. [Roadmap](#roadmap)
+1. [Contributing](#contributing)
+
 ## Team
 
   - __Product Owner__: Jing
   - __Scrum Master__: Nate
   - __Development Team Members__: Simon, Kevin
-
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
 
 ## Usage
 
