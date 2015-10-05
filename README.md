@@ -5,7 +5,7 @@ Pioneering project in speed type tech
 ## Table of Contents
 
 1. [Team](#team)
-1. [Usage](#Usage)
+1. [Usage](#usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
