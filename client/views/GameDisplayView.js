@@ -1,10 +1,13 @@
+/*
+* GameDisplayView initializes the D3 used to display the user and opponent scores,
+*   found in ../d3/raceVisuals.js.
+* Also contains model event listeners for score changes which update the D3 visuals.
+*/
 var GameDisplayView = Backbone.View.extend({
 
   tagName: "div",
 
   className: "gameView",
-
-  // game: ,
 
   initialize: function ( params ) {
     this.model.on('change:numCorrect', this.update, this);
@@ -23,12 +26,16 @@ var GameDisplayView = Backbone.View.extend({
     this.game.render(this.model.get('numCorrect'), this.model.get('oppScore'));
   },
 
+  /*
+  * Attach these functions to model socket listeners to link d3 visuals to the start and end
+  *   of the game.
+  */
   gameStart: function() {
 
   },
 
   gameOver: function() {
-    //render something on game over
+    
   }
   
 });
