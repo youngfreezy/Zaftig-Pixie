@@ -36,6 +36,7 @@
     "grunt-contrib-cssmin": "^0.14.0",
     "grunt-mocha-test": "^0.12.7",
     "grunt-nodemon": "^0.4.0",
+    "grunt-shell": "^1.1.2",
     "jquery": "^2.1.4",
     "mongodb": "^2.0.45",
     "mongoose": "^4.1.9",
