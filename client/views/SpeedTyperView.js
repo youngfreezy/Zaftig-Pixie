@@ -11,7 +11,7 @@ var SpeedTyperView = Backbone.View.extend({
   initialize: function ( params ) {
     this.statsView = new StatsView({ model: this.model });
     this.inputView = new InputView({ model: this.model });
-    this.paragraphView = new ParagraphView({ model: this.model })
+    this.paragraphView = new ParagraphView({ model: this.model });
     this.render();
 
     this.model.on('beginGame', function(){ this.changeText('beginGame'); }, this);
@@ -23,6 +23,7 @@ var SpeedTyperView = Backbone.View.extend({
   render: function () {
     return this.$el.html([
       '<h2>Waiting for Opponent...</h2>',
+      '<h3 class="practice">In the meantime practice your typing skills!</h3>',
       this.statsView.$el,
       this.inputView.$el, 
       this.paragraphView.$el
@@ -32,6 +33,7 @@ var SpeedTyperView = Backbone.View.extend({
   changeText: function (status) {
     if(status === 'beginGame'){
       $('h2').text('Start Typing!');
+      $('h3.practice').remove();
     } else if(status === 'win'){
       $('h2').text('You win!');
     } else if(status === 'lose'){
