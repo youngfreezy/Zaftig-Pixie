@@ -19,14 +19,12 @@ Once the project moves into development, the press release can be used as a touc
 ## Speed Typer ##
   > Increase your typing skills by practicing against an opponent.
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-
 ## Summary ##
   > Become a master typist by racing to enter Chuck Norris jokes into the input field faster than your friend!  The score is represented in real-time by a slick D3 visualization.  Get 20 words ahead to savor the sweet taste of victory.
 
 ## Problem ##
   > Learning to type quickly can be tedious and dull.  
+  
 ## Solution ##
   > To solve this, we at Zaftig-Pixie made use of the power of Chuck Norris jokes to create an innovative and fun solution.
 
