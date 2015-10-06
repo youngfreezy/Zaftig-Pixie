@@ -16,7 +16,7 @@ var InputView = Backbone.View.extend({
     * beginGame trigger is detected, the view will enable the user to type.
     */
     this.model.bind("beginGame", this.beginGame.bind(this));
-    this.$el.prop("disabled", true);
+    this.$el.prop("disabled", false);
 
     /*
     * Add a game over event listener to disable the input box so they cannot
@@ -56,7 +56,10 @@ var InputView = Backbone.View.extend({
   */
   beginGame: function () {
     // alert('begin');
-    this.$el.prop("disabled", false);
+    this.$el.removeClass(this.model.get("prevResult"));
+    this.$el.addClass("noOutline");
+    this.$el.val("");
+    this.$el.attr('placeholder', this.model.getCurrentWord());
   },
 
   /*
