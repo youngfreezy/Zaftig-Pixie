@@ -26,6 +26,7 @@ var SpeedTyperModel = Backbone.Model.extend({
     oppScore: 0,
     currentIndex: 0,
     wpm: 0,
+    practiceMode: false,
 
     /*
     * 'gameOver' is updated from a socket handler, triggered
@@ -44,7 +45,7 @@ var SpeedTyperModel = Backbone.Model.extend({
     this.set('socket', io.connect(window.location.host));
     this.get('socket').on('connect', function () {
       console.log('Connected!');
-    })
+    });
 
     /*
     * Add event listeners for the socket object. The handlers:
@@ -55,6 +56,7 @@ var SpeedTyperModel = Backbone.Model.extend({
     * lose: emmitted from socket when opponent has a winning score differential
     */
     this.get('socket').on('update', this.updateOpponent.bind(this));
+    this.get('socket').on('practice', this.beginPractice.bind(this));
     this.get('socket').on('win', this.gameWin.bind(this));
     this.get('socket').on('lose', this.gameLose.bind(this));
     this.get('socket').on('match', this.beginGame.bind(this));
@@ -66,6 +68,15 @@ var SpeedTyperModel = Backbone.Model.extend({
 
   },
 
+
+  /*
+  * beginPractice is called when a socket emits a 'practice' event.
+  */
+  beginPractice: function() {
+    this.set('practiceMode', true);
+    this.set('startTime', Date.now());
+  },
+
   /*
   * beginGame is called when a socket emits a 'match' event. 
   */
@@ -73,6 +84,12 @@ var SpeedTyperModel = Backbone.Model.extend({
     /*
     * 'startTime' is used to calculate words per minute.
     */
+    this.set('practiceMode', false);
+    this.set('numCorrect', 0);
+    this.set('numMissed', 0);
+    this.set('wpm', 0);
+    this.trigger('update');
+    this.set('currentIndex', 0);
     this.set('startTime', Date.now());
 
     /*
@@ -121,7 +138,7 @@ var SpeedTyperModel = Backbone.Model.extend({
       success: function(data, response){
         return response.text;
       }
-    })
+    });
 
     this.deferred.done(function(data){
       /*
@@ -147,7 +164,10 @@ var SpeedTyperModel = Backbone.Model.extend({
 
     
     if( inputWord === this.get('paragraphArray')[this.get('currentIndex')] ){
-      this.set( 'numCorrect', this.get('numCorrect') + 1 );
+      this.set('numCorrect', this.get('numCorrect') + 1 );
+      if (!this.get('practiceMode')) {
+        this.trigger('correct');
+      };
       /*
       * 'prevResult' is set to notify the views whether the input submitted
       * is correct or incorrect.
@@ -207,4 +227,4 @@ var SpeedTyperModel = Backbone.Model.extend({
     //TODO submit post request with game statistics
   }
 
-})
+});

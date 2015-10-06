@@ -25,7 +25,7 @@ var ParagraphView = Backbone.View.extend({
     return this.$el.html([
       "<p>" + this.model.get('currentLine').join(" ") + "</p>",
       "<p>" + this.model.get('nextLine').join(" ") + "</p>"
-      ]);
+    ]);
   }, 
 
   /*  
