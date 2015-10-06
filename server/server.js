@@ -1,5 +1,8 @@
 var express = require('express');
 var app = express();
+//var mongoose = require("mongoose");
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -9,7 +12,6 @@ var sassMiddleware = require('node-sass-middleware');
 var path = require('path');
 // Middleware
 var parser = require('body-parser');
-
 // Set what we are listening on.
 app.set("port", 3000);
 
@@ -29,6 +31,35 @@ app.use(sassMiddleware({
 // Serve the client files
 app.use(express.static(__dirname + "/../client"));
 
+app.use(express.cookieParser());
+app.use(express.bodyParser());
+app.use(express.session({ secret: 'SECRET'}));
+app.use(passport.initialize());
+app.use(passport.session())
+
+passport.use( new FacebookStrategy({
+  clientID: "1666396103573629",
+  clientSecret: "21352511ea81f083bc803c46f7398c6e",
+  callbackURL: "http://localhost:3000/auth/facebook/callback"
+}, 
+function(acessToken, refreshToken, profile, done){
+  //query for users that have already loggedin with facebook. 
+  FbUsers.findOne({fbId : profile.id}, function(err, oldUser){
+    if(oldUser){
+      done(null, oldUser);
+    } else{
+      var newUser = new FbUsers({
+        fbId : profile.id,
+        email; profile.emails[0].value,
+        name: profile.displayName
+      }).save(function(err, newUser){
+        if(err ) throw err;
+        done(null, newUser);
+      })
+    }
+  }) 
+}
+))
 
 // If we are being run directly, run the server.
 if (!module.parent) {
@@ -77,7 +108,13 @@ io.on('connection', function (socket) {
 
 
 /*----------  Routes  ----------*/
-
+//SCHEMA for facebook users for database:
+// var FacebookUserSchema = new mongoose.Schema({
+//     fbId: String,
+//     email: { type : String , lowercase : true},
+//     name : String
+// });
+// var FbUsers = mongoose.model('fbs',FacebookUserSchema);
 
 // request user data from database
 app.use('/user', handlers.user);
