@@ -40,6 +40,8 @@
     "jquery": "^2.1.4",
     "mongodb": "^2.0.45",
     "mongoose": "^4.1.9",
+    "node-sass": "^3.3.3",
+    "node-sass-middleware": "^0.9.6",
     "npm": "^3.3.4",
     "request": "^2.64.0",
     "socket.io": "^1.3.7",

@@ -4,7 +4,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
@@ -50,14 +49,6 @@ module.exports = function(grunt) {
         files: {
           'client/dist/scripts/game.js': clientIncludeOrder
         }
-      }
-    },
-
-    cssmin: {
-        // Add filespec list here
-      target: {
-        src: 'client/css/styles.css',
-        dest: 'client/dist/css/styles.min.css'
       }
     },
 
@@ -155,7 +146,7 @@ module.exports = function(grunt) {
   // });
 
   // Perform a build
-  grunt.registerTask('build', [ 'concat', 'uglify', 'cssmin' ]);
+  grunt.registerTask('build', [ 'concat', 'uglify' ]);
 
   // Run all tests once
   grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
