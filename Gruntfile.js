@@ -43,6 +43,9 @@ module.exports = function(grunt) {
 
     // uglify the files
     uglify: {
+      lib: {
+        files: { 'dist/client/lib/lib.ug.js': 'dist/client/lib/lib.js' }
+      },
       speedTyper: {
         files: {
           'dist/client/scripts/game.js': clientIncludeOrder
@@ -58,31 +61,17 @@ module.exports = function(grunt) {
       }
     },
 
-    // copy necessary files to our dist folder
-    copy: {
-      // create a task for client files
-      client: {
-        // Copy everything but the to-be-concatenated todo JS files
-        src: [ 'client/**', '!client/d3/**', '!client/models/**', '!client/views/**', '!client/css/**' ],
-        dest: 'dist/'
-      },
-      // create a task for server files
-      server: {
-        src: [ 'server/**' ],
-        dest: 'dist/'
-      }
-    },
 
     // concat all the js files
     concat: {
       lib: {
         files: {
           'dist/client/lib/lib.js': [
-            './bower_components/jquery/jquery.min.js',
-            './bower_components/underscore/underscore-min.js',
-            './bower_components/backbone/backbone-min.js',
-            './bower_components/d3/d3.min.js',
-            './bower_components/socket.io-client/socket.io.js'
+            './client/bower_components/jquery/jquery.min.js',
+            './client/bower_components/underscore/underscore-min.js',
+            './client/bower_components/backbone/backbone-min.js',
+            './client/bower_components/d3/d3.min.js',
+            './client/bower_components/socket.io-client/socket.io.js'
           ]
         }
       },
@@ -99,7 +88,7 @@ module.exports = function(grunt) {
     express: {
       dev: {
         options: {
-          script: 'dist/server/server.js'
+          script: 'server/server.js'
         }
       }
     },
@@ -166,13 +155,13 @@ module.exports = function(grunt) {
   // });
 
   // Perform a build
-  grunt.registerTask('build', [ 'clean', 'copy', 'concat', 'uglify', 'cssmin' ]);
+  grunt.registerTask('build', [ 'concat', 'uglify', 'cssmin' ]);
 
   // Run all tests once
   grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
 
   // Start watching and run tests when files concathange
-  grunt.registerTask('default', [ 'build', 'watch' ]);
+  grunt.registerTask('default', [ 'express:dev', 'mochaTest', 'build', 'watch' ]);
 
   // If the production option has been passed, deploy the app, otherwise run locally
   grunt.registerTask('upload', function(n) {
@@ -186,5 +175,5 @@ module.exports = function(grunt) {
 
   // Deployment
   // TODO: Create 'upload' task to upload to heroku
-  grunt.registerTask('deploy', [ 'build', 'test', 'upload' ])
+  grunt.registerTask('deploy', [ 'build', 'test', 'upload' ]);
 };
