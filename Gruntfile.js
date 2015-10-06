@@ -44,11 +44,11 @@ module.exports = function(grunt) {
     // uglify the files
     uglify: {
       lib: {
-        files: { 'dist/client/lib/lib.ug.js': 'dist/client/lib/lib.js' }
+        files: { 'client/dist/lib/lib.ug.js': 'client/dist/lib/lib.js' }
       },
       speedTyper: {
         files: {
-          'dist/client/scripts/game.js': clientIncludeOrder
+          'client/dist/scripts/game.js': clientIncludeOrder
         }
       }
     },
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         // Add filespec list here
       target: {
         src: 'client/css/styles.css',
-        dest: 'dist/client/css/styles.min.css'
+        dest: 'client/dist/css/styles.min.css'
       }
     },
 
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
     concat: {
       lib: {
         files: {
-          'dist/client/lib/lib.js': [
+          'client/dist/lib/lib.js': [
             './client/bower_components/jquery/jquery.min.js',
             './client/bower_components/underscore/underscore-min.js',
             './client/bower_components/backbone/backbone-min.js',
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
       game: {
         files: {
           // concat all the speed-typer js files into one file
-          'dist/client/scripts/game.js': clientIncludeOrder
+          'client/dist/scripts/game.js': clientIncludeOrder
         }
       }
     },
