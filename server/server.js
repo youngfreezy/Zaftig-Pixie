@@ -5,8 +5,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var handlers = require('./request-handlers');
 var socketHandlers = require('./socket-handlers');
-
-
+var sassMiddleware = require('node-sass-middleware');
+var path = require('path');
 // Middleware
 var parser = require('body-parser');
 
@@ -15,6 +15,16 @@ app.set("port", 3000);
 
 // Logging and parsing
 app.use(parser.json());
+
+// Output CSS files from SASS
+app.use(sassMiddleware({
+    /* Options */
+    src: path.join(__dirname, "../client/sass"),
+    dest: path.join(__dirname, "../client/dist/css"),
+    debug: true,
+    outputStyle: 'compressed',
+    prefix:  '/dist/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+}));
 
 // Serve the client files
 app.use(express.static(__dirname + "/../client"));
