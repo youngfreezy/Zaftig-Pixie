@@ -46,6 +46,8 @@ io.on('connection', function (socket) {
     if (users.numberOfUsers === 2) {
       console.log('\nThere are two users, emitting "match" event.\n');
       io.emit('match');
+    } else {
+      io.emit('practice');
     }
   });
 
