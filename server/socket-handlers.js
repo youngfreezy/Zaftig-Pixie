@@ -9,7 +9,7 @@ var loginUser = function (socket) {
   // create a userData property which points to this
   // socket's data in the server's user cache
   socket.userData = server.users[username];
-}
+};
 
 var updateScore = function (socket, data, callback) {
   // update score
@@ -17,7 +17,7 @@ var updateScore = function (socket, data, callback) {
   console.log('\n\n This is the server cache after socket update: \n', server.users);
   // run the callback, specified in the 'update' listener on server.js
   callback(socket);
-}
+};
 
 var checkForEndGame = function (socket) {
   // save each user's data object
@@ -39,8 +39,8 @@ var checkForEndGame = function (socket) {
     socket.broadcast.emit('win');
     return 'user2Winner';
   }
-  return 'noWinner'
-}
+  return 'noWinner';
+};
 
 
 
