@@ -1,4 +1,4 @@
-# Project Name #
+# Speed Typer #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -16,29 +16,28 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
-
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+## Speed Typer ##
+  > Increase your typing skills by practicing against an opponent.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > Become a master typist by racing to enter Chuck Norris jokes into the input field faster than your friend!  The score is represented in real-time by a slick D3 visualization.  Get 20 words ahead to savor the sweet taste of victory.
 
 ## Problem ##
-  > Describe the problem your product solves.
-
+  > Learning to type quickly can be tedious and dull.  
+  
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > To solve this, we at Zaftig-Pixie made use of the power of Chuck Norris jokes to create an innovative and fun solution.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "A quote?  Oh nooo.."
+  --<cite>Simon Schmalfuss</cite>
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Load up the page, wait for your friend to do likewise, and the app will signal you to start.  Let those fingers fly!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "It changed my life.  For the better?"
+  --<cite>Nate Starun</cite>
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Don't forget to register to vote.. but not for Chuck Norris.
