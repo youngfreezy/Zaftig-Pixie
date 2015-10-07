@@ -97,7 +97,7 @@ module.exports.text = function (request, response) {
 
   randomWiki(function (err, topic) {
     var data = {};
-    console.log(topic);
+    //console.log(topic);
     articleTitle = topic;
     wikiJSON.from_api(topic, "en", function(markup){
       data.text= formatString(wikiJSON.plaintext(markup));
