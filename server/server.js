@@ -3,10 +3,12 @@ var app = express();
 var config = require('./oauth.js')
 var mongoose = require('mongoose')
 var passport = require('passport')
-//this module lets us view messages that come back with authentication
+  //this module lets us view messages that come back with authentication
 var flash = require('connect-flash');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var http = require('http').Server(app);
+var FacebookStrategy = require('passport-facebook')
+  .Strategy;
+var http = require('http')
+  .Server(app);
 var io = require('socket.io')(http);
 var handlers = require('./request-handlers');
 var socketHandlers = require('./socket-handlers');
@@ -21,7 +23,7 @@ var session = require('express-session');
 
 var parser = require('body-parser');
 // pass passport for configuration
-require('../config/passport')(passport); 
+require('../config/passport')(passport);
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -34,7 +36,9 @@ app.set('view engine', 'ejs');
 
 //things that are required for passport:
 
-app.use(session({ secret: 'fareezeatscookiesthatswhyheisoverweight'}))
+app.use(session({
+  secret: 'fareezeatscookiesthatswhyheisoverweight'
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -51,12 +55,12 @@ app.use(parser.json());
 
 // Output CSS files from SASS
 app.use(sassMiddleware({
-    /* Options */
-    src: path.join(__dirname, "../client/sass"),
-    dest: path.join(__dirname, "../client/dist/css"),
-    debug: true,
-    outputStyle: 'compressed',
-    prefix:  '/dist/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+  /* Options */
+  src: path.join(__dirname, "../client/sass"),
+  dest: path.join(__dirname, "../client/dist/css"),
+  debug: true,
+  outputStyle: 'compressed',
+  prefix: '/dist/css' // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
 }));
 
 // Serve the client files
@@ -71,11 +75,13 @@ if (!module.parent) {
 
 /*----------  Server Cache  ----------*/
 
-var users = { numberOfUsers: 0 };
+var users = {
+  numberOfUsers: 0
+};
 
 /*----------  Socket listeners  ----------*/
 
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
 
   // 'login' listener for 'login' event, emitted from AppView
   socket.on('login', function() {
@@ -94,15 +100,15 @@ io.on('connection', function (socket) {
     }
   });
 
-  socket.on('update', function (data) {
+  socket.on('update', function(data) {
     // update the opponent with this user's data
     // pass in anonymous function to be executed upon update completion
-    socketHandlers.updateScore(socket, data, function () {
+    socketHandlers.updateScore(socket, data, function() {
       // save the result of checkForEndGame to see if it 
       // is necessary to emit an update event
       socket.broadcast.emit('update', data);
       var endGameStatus = socketHandlers.checkForEndGame(socket);
-      if(endGameStatus === "user1Winner" || endGameStatus === "user2Winner") {
+      if (endGameStatus === "user1Winner" || endGameStatus === "user2Winner") {
         users.numberOfUsers = 0;
       }
 
