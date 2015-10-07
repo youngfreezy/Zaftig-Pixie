@@ -3,22 +3,20 @@ var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
 
 
-var userSchema = mongoose.Schema({
-  username: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true }
-});
+// var userSchema = mongoose.Schema({
+//   username: { type: String, required: true, index: { unique: true } },
+//   password: { type: String, required: true }
+// });
 
 //need to update for facebook Authentication:
-// var userSchema = mongoose.Schema({
-//   facebook : {
-//     id: String,
-//     token : String,
-
-//     //needs to be email for facebook, not username.
-//     email : String,
-//     name : String
-//   }
-// })
+var userSchema = mongoose.Schema({
+  facebook : {
+    id: String,
+    token : String,
+    email : String,
+    name : String
+  }
+})
 var User = mongoose.model('User', userSchema);
 
 User.comparePassword = function(candidatePassword, savedPassword, cb) {
