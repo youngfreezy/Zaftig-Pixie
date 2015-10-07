@@ -22,8 +22,14 @@ var InputView = Backbone.View.extend({
     * Add a game over event listener to disable the input box so they cannot
     * type
     */
+<<<<<<< HEAD
     this.model.on('change:gameOver', this.disableInput, this);
   },
+=======
+    this.model.on("change:gameOver", this.disableInput, this);
+    this.model.on("paragraphSet", this.setCursorAndPlaceholder, this);
+  }, 
+>>>>>>> Add focus and placeholder when game starts.
 
   events: {
     /*
@@ -55,11 +61,14 @@ var InputView = Backbone.View.extend({
   *   has begun, allowing the user to begin typing.
   */
   beginGame: function () {
-    // alert('begin');
     this.$el.removeClass(this.model.get("prevResult"));
     this.$el.addClass("noOutline");
     this.$el.val("");
+  },
+
+  setCursorAndPlaceholder: function () {
     this.$el.attr('placeholder', this.model.getCurrentWord());
+    this.$el.focus();
   },
 
   /*
