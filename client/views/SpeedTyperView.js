@@ -3,10 +3,14 @@
 *  game, which exist in statsView, inputView and paragraphView.
 */
 var SpeedTyperView = Backbone.View.extend({
-  
+
   tagName: "div",
 
   className: "speedTyperContainer",
+
+  events: {
+        "click .button" : "restart"
+    },
 
   initialize: function ( params ) {
     this.statsView = new StatsView({ model: this.model });
@@ -25,10 +29,10 @@ var SpeedTyperView = Backbone.View.extend({
       '<h2>Waiting for Opponent...</h2>',
       '<h3 class="practice">In the meantime practice your typing skills!</h3>',
       this.statsView.$el,
-      this.inputView.$el, 
+      this.inputView.$el,
       this.paragraphView.$el
-    ]); 
-  }, 
+    ]);
+  },
 
   changeText: function (status) {
     if(status === 'beginGame'){
@@ -36,9 +40,16 @@ var SpeedTyperView = Backbone.View.extend({
       $('h3.practice').remove();
     } else if(status === 'win'){
       $('h2').text('You win!');
+      $('h2').append('<p><a href="#" class="button">New Game</a></p>');
     } else if(status === 'lose'){
       $('h2').text('You lose!');
+      $('h2').append('<p><a href="#" class="button">New Game</a></p>');
     }
+  },
+
+  restart: function() {
+    this.model.get('socket').emit('login');
+    this.initialize();
   }
 
 });
