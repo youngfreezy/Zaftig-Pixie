@@ -11,6 +11,7 @@ var ParagraphView = Backbone.View.extend({
 
   initialize: function () {
     this.model.on('change:currentIndex', this.updateCurrent, this);
+    this.model.on('paragraphSet', this.updateCurrent, this);
     this.model.on('change:currentLine', this.render, this);
     this.model.on('change:nextLine', this.render, this);
     this.model.fetchText();
