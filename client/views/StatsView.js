@@ -14,10 +14,13 @@ var StatsView = Backbone.View.extend({
   },
 
   render: function () {
+    var $statsWpm = $('<div class="wpm stats-box"></div>');
+    var $statsCorrect = $('<div class="correct stats-box"></div>');
+    var $statsMissed = $('<div class="missed stats-box"></div>');
     return this.$el.html([
-      'wpm: ' + Math.floor(this.model.get('wpm')),
-      ', correct: ' + this.model.get('numCorrect'),
-      ', missed: ' + this.model.get('numMissed')
+      $statsWpm.append('<span class="num">' + Math.floor(this.model.get('wpm')) + '</span><span class="desc">wpm</span>' ),
+      $statsCorrect.append('<span class="num">' + this.model.get('numCorrect') + '</span><span class="desc">correct</span>' ),
+      $statsMissed.append('<span class="num">' + this.model.get('numMissed') + '</span><span class="desc">missed</span>' ),
     ]);
   }
 });

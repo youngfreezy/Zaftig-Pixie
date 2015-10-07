@@ -25,14 +25,20 @@ var SpeedTyperView = Backbone.View.extend({
   },
 
   render: function () {
+    var $typingView = $('<div class="typing-view"></div>');
+    var $statsView = $('<div class="stats-view"></div>');
     return this.$el.html([
       '<h2>Waiting for Opponent...</h2>',
       '<h3 class="practice">In the meantime practice your typing skills!</h3>',
-      this.statsView.$el,
-      this.inputView.$el,
-      this.paragraphView.$el
-    ]);
-  },
+      $typingView.append([
+        this.paragraphView.$el,
+        this.inputView.$el,
+      ]),
+      $statsView.append([
+        this.statsView.$el
+      ])
+    ]); 
+  }, 
 
   changeText: function (status) {
     if(status === 'beginGame'){
