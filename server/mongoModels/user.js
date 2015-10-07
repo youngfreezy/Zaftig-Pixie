@@ -8,6 +8,18 @@ var userSchema = mongoose.Schema({
   password: { type: String, required: true }
 });
 
+//need to update for facebook Authentication:
+
+// var userSchema = mongoose.Schema({
+//   facebook : {
+//     id: String,
+//     token : String,
+
+//     //needs to be email for facebook, not username.
+//     email : String,
+//     name : String
+//   }
+// })
 var User = mongoose.model('User', userSchema);
 
 User.comparePassword = function(candidatePassword, savedPassword, cb) {
