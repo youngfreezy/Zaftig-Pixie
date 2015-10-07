@@ -81,6 +81,7 @@ io.on('connection', function (socket) {
 
 /*----------  Routes  ----------*/
 
+app.use('/wikipedia', handlers.wikipedia);
 
 // request user data from database
 app.use('/user', handlers.user);
