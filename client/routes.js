@@ -7,13 +7,13 @@ module.exports = function(app, passport) {
 
   //LOGIN 
 
-  app.get('/login', function(req, res) {
+  // app.get('/login', function(req, res) {
 
-    //render the page 
-    res.render('login.ejs', {
-      message: req.flash('loginMessage')
-    });
-  })
+  //   //render the page 
+  //   res.render('login.ejs', {
+  //     message: req.flash('loginMessage')
+  //   });
+  // })
   app.get('/signup', function(req, res) {
 
     //render the page 
@@ -37,7 +37,7 @@ module.exports = function(app, passport) {
     //specific to the facbeook API. if you want something other than the default
     // you ahve to use the scope property
     {
-      scope: 'email'
+      scope: ['email']
     }));
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
@@ -62,3 +62,4 @@ module.exports = function(app, passport) {
 
     res.redirect('/');
   }
+}
