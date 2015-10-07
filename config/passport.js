@@ -1,5 +1,4 @@
-var FacebookStrategy = require('passport-facebook')
-  .Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../server/mongoModels/user.js');
 
 //the auth variables
@@ -23,18 +22,25 @@ module.exports = function(passport) {
   })
 
   passport.use(new FacebookStrategy({
-      clientId: configAuth.facebookAuth.clientID,
+      clientID: configAuth.facebookAuth.clientID,
       clientSecret: configAuth.facebookAuth.clientSecret,
-      callbackURL: configAuth.facebookAuth.callbackURL
+      callbackURL: configAuth.facebookAuth.callbackURL,
+      enableProof: false,
+      profileFields: ['id', 'emails', 'name']
     },
+
     //facebook will send back the token and the profile
     function(token, refreshToken, profile, done) {
       process.nextTick(function() {
         //find the user in the database based on their facebook ID
+        console.log("I am in the callback getting the token")
+        // console.log("This is the token: ", token);
+        console.log("This is the profile: ", profile);
+        console.log("This is the profile email: ", profile.emails);
         User.findOne({
           'facebook.id': profile.id
-        }, function(err, data) {
-          if (err) return done(err);
+        }, function(err, user) {
+          if (err) {throw err}
 
           if (user) {
             return done(null, user);
@@ -53,6 +59,7 @@ module.exports = function(passport) {
                 throw err;
 
               // if successful, return the new user
+              console.log("successfully saved user into database")
               return done(null, newUser);
             });
 

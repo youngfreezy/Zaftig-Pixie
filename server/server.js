@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var config = require('./oauth.js')
 var mongoose = require('mongoose')
 var passport = require('passport')
   //this module lets us view messages that come back with authentication
@@ -43,7 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 //routes
-require('../../client/routes.js')(app, passport);
+require('../client/routes.js')(app, passport);
 
 // Set what we are listening on.
 var port = process.env.PORT || 3000;
