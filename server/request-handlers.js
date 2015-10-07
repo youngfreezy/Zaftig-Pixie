@@ -56,7 +56,7 @@ module.exports.register = function (request, response) {
 module.exports.text = function (request, response) {
   // Correct errors in API string output before serving back to client
   var formatString = function (string) {
-    var result = ''
+    var result = '';
     // replace "&quot;" with ""
     var escapedQuotes = string.replace(/&quot;/g, '"');
     // replace out-of-place "?"s with "'"s
@@ -76,10 +76,11 @@ module.exports.text = function (request, response) {
     }
 
     return result;
-  }
+  };
+  
   // Hit API for data, correct errors, serve to client
   req('http://api.icndb.com/jokes/random/50', function (error, res, body) {
-    var data = {}
+    var data = {};
     var jokes = [];
     var parsedBody = JSON.parse(body);
     parsedBody.value.forEach(function(jokeObject) {
@@ -89,8 +90,6 @@ module.exports.text = function (request, response) {
     data.text = formatString(data.text);
     response.send(data);
   });
-
-
 
 };
 
