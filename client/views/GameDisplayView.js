@@ -20,7 +20,7 @@ var GameDisplayView = Backbone.View.extend({
 
   render: function () {
     this.game.render(0, 0);
-  }, 
+  },
 
   update: function() {
     this.game.render(this.model.get('numCorrect'), this.model.get('oppScore'));
@@ -35,7 +35,7 @@ var GameDisplayView = Backbone.View.extend({
   },
 
   gameOver: function() {
-    
+
   }
-  
+
 });

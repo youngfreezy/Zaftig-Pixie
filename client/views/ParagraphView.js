@@ -3,13 +3,13 @@
 *   as the text to be typed.
 */
 
-var ParagraphView = Backbone.View.extend({ 
+var ParagraphView = Backbone.View.extend({
 
   tagName: "div",
 
   className: "paragraphText",
 
-  initialize: function () { 
+  initialize: function () {
     this.model.on('change:currentIndex', this.updateCurrent, this);
     this.model.on('change:currentLine', this.render, this);
     this.model.on('change:nextLine', this.render, this);
@@ -18,7 +18,7 @@ var ParagraphView = Backbone.View.extend({
   },
 
   /*
-  * render grabs the current and next lines from the model and 
+  * render grabs the current and next lines from the model and
   *   displays the in the html.
   */
   render: function () {
@@ -26,9 +26,10 @@ var ParagraphView = Backbone.View.extend({
       "<p>" + this.model.get('currentLine').join(" ") + "</p>",
       "<p>" + this.model.get('nextLine').join(" ") + "</p>"
     ]);
-  }, 
+  },
 
-  /*  
+
+  /*
   * updateLines tells the model to recalculate the current and next line.
   * updateLines is called by 'updateCurrent' every five iterations, when
   *   the end of the current line is reached.
@@ -36,10 +37,10 @@ var ParagraphView = Backbone.View.extend({
   updateLines: function () {
     this.model.updateCurrentLine();
     this.model.updateNextLine();
-  }, 
+  },
 
   /*
-  * updateCurrent checks if we've iterated five words and calls 
+  * updateCurrent checks if we've iterated five words and calls
   *   updateLines to display the correct lines.
   * updateCurrent also adds a 'currentWord' class to the current word which
   *   highlights that word for the user.
@@ -53,7 +54,7 @@ var ParagraphView = Backbone.View.extend({
     var currentLine = this.model.get('currentLine').slice();
     var nextLine = this.model.get('nextLine').slice();
 
-    currentLine[lineIndex] = "<span class='currentWord'>" + currentLine[lineIndex] + "</span>"
+    currentLine[lineIndex] = "<span class='currentWord'>" + currentLine[lineIndex] + "</span>";
     this.$el.html([
       "<p>" + currentLine.join(" ") + "</p>",
       "<p>" + nextLine.join(" ") + "</p>"

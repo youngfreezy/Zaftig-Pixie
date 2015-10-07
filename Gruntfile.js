@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 
 
 
+
   // in what order should the files be concatenated
   var clientIncludeOrder = require('./include.conf.js');
 
@@ -132,6 +133,7 @@ module.exports = function(grunt) {
     }
   });
 
+grunt.loadNpmTasks('grunt-npm-install');
   // grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
     // var nodemon = grunt.util.spawn({
@@ -152,7 +154,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
 
   // Start watching and run tests when files concathange
-  grunt.registerTask('default', [ 'express:dev', 'mochaTest', 'build', 'watch' ]);
+  grunt.registerTask('default', [ 'npm-install', 'express:dev', 'mochaTest', 'build', 'watch' ]);
 
   // If the production option has been passed, deploy the app, otherwise run locally
   grunt.registerTask('upload', function(n) {

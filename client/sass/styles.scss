@@ -49,3 +49,14 @@ input {
 input:disabled {
   background-color: #eee;
 }
+
+a.button {
+  text-decoration: none;
+  background-color: #419BF9;
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 10px;
+  float: center;
+  margin-right: 10px;
+}

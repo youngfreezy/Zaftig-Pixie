@@ -69,11 +69,14 @@ io.on('connection', function (socket) {
       // is necessary to emit an update event
       socket.broadcast.emit('update', data);
       var endGameStatus = socketHandlers.checkForEndGame(socket);
+      if(endGameStatus === "user1Winner" || endGameStatus === "user2Winner") {
+        users.numberOfUsers = 0;
+      }
 
     });
   });
 
-}); 
+});
 
 
 /*----------  Routes  ----------*/

@@ -1,12 +1,12 @@
 /*
-* StatsView listens to the model and displays the current 
+* StatsView listens to the model and displays the current
 *   player statistics on the page as they are updated.
 */
 var StatsView = Backbone.View.extend({
-  
+
   tagName: "div",
 
-  className: "statsView", 
+  className: "statsView",
 
   initialize: function ( params ) {
     this.model.on('update', this.render, this);
