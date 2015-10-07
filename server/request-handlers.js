@@ -2,6 +2,8 @@ var db = require('./config');
 var bodyParser = require('body-parser');
 var User = require('./mongoModels/user');
 var req = require('request');
+var randomWiki = require('random-wiki');
+var wikiJSON = require('wikipedia2json');
 
 module.exports.user = function (request, response) {
   if(request.method==="GET"){
@@ -15,6 +17,21 @@ module.exports.user = function (request, response) {
     });
   }
 
+};
+
+
+module.exports.wikipedia = function(req, res){
+  var articleTitle = "";
+  randomWiki(function (err, topic) {
+    console.log(topic);
+    articleTitle = topic;
+    wikiJSON.from_api(topic, "en", function(markup){
+      //var obj= wtf_wikipedia.parse(markup);
+      var text= wikiJSON.plaintext(markup);
+      console.log(text);
+    });
+  });
+  res.send(200);
 };
 
 module.exports.login = function (request, response) {
@@ -64,7 +81,7 @@ module.exports.text = function (request, response) {
       if (escapedQuotes[i] === "?") {
         if (escapedQuotes[i-1] === "s" && escapedQuotes[i+1] === "a") {
           // handle one-off typo on API return object id# 283
-          result += '... ';   
+          result += '... ';
         } else if (escapedQuotes[i+1] !== " " && escapedQuotes[i+1] !== '"') {
           result += "'";
         } else {
@@ -77,19 +94,29 @@ module.exports.text = function (request, response) {
 
     return result;
   };
-  
-  // Hit API for data, correct errors, serve to client
-  req('http://api.icndb.com/jokes/random/50', function (error, res, body) {
+
+  randomWiki(function (err, topic) {
     var data = {};
-    var jokes = [];
-    var parsedBody = JSON.parse(body);
-    parsedBody.value.forEach(function(jokeObject) {
-      jokes.push(jokeObject.joke);
+    console.log(topic);
+    articleTitle = topic;
+    wikiJSON.from_api(topic, "en", function(markup){
+      data.text= formatString(wikiJSON.plaintext(markup));
+      response.send(data);
     });
-    data.text = jokes.join(' ');
-    data.text = formatString(data.text);
-    response.send(data);
   });
+
+  // Hit API for data, correct errors, serve to client
+  // req('http://api.icndb.com/jokes/random/50', function (error, res, body) {
+  //   var data = {};
+  //   var jokes = [];
+  //   var parsedBody = JSON.parse(body);
+  //   parsedBody.value.forEach(function(jokeObject) {
+  //     jokes.push(jokeObject.joke);
+  //   });
+  //   data.text = jokes.join(' ');
+  //   data.text = formatString(data.text);
+  //   response.send(data);
+  // });
 
 };
 
