@@ -37,6 +37,16 @@ app.use(express.session({ secret: 'SECRET'}));
 app.use(passport.initialize());
 app.use(passport.session())
 
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    User.findOne({ _id: id }, function (err, user) {
+      done(err, user);
+    });
+  });
+
 passport.use( new FacebookStrategy({
   clientID: "1666396103573629",
   clientSecret: "21352511ea81f083bc803c46f7398c6e",
@@ -44,6 +54,13 @@ passport.use( new FacebookStrategy({
 }, 
 function(acessToken, refreshToken, profile, done){
   //query for users that have already loggedin with facebook. 
+  //SCHEMA for facebook users for database:
+// var FacebookUserSchema = new mongoose.Schema({
+//     fbId: String,
+//     email: { type : String , lowercase : true},
+//     name : String
+// });
+// var FbUsers = mongoose.model('fbs',FacebookUserSchema);
   FbUsers.findOne({fbId : profile.id}, function(err, oldUser){
     if(oldUser){
       done(null, oldUser);
@@ -108,13 +125,7 @@ io.on('connection', function (socket) {
 
 
 /*----------  Routes  ----------*/
-//SCHEMA for facebook users for database:
-// var FacebookUserSchema = new mongoose.Schema({
-//     fbId: String,
-//     email: { type : String , lowercase : true},
-//     name : String
-// });
-// var FbUsers = mongoose.model('fbs',FacebookUserSchema);
+
 
 // request user data from database
 app.use('/user', handlers.user);
