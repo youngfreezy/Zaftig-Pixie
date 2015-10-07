@@ -14,8 +14,8 @@ var SpeedTyperView = Backbone.View.extend({
 
   initialize: function ( params ) {
     this.statsView = new StatsView({ model: this.model });
-    this.inputView = new InputView({ model: this.model });
     this.paragraphView = new ParagraphView({ model: this.model });
+    this.inputView = new InputView({ model: this.model });
     this.render();
 
     this.model.on('beginGame', function(){ this.changeText('beginGame'); }, this);
