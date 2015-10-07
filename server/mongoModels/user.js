@@ -9,7 +9,6 @@ var userSchema = mongoose.Schema({
 });
 
 //need to update for facebook Authentication:
-
 // var userSchema = mongoose.Schema({
 //   facebook : {
 //     id: String,
