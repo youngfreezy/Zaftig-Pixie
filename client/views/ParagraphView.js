@@ -49,11 +49,11 @@ var ParagraphView = Backbone.View.extend({
     var currentLine = this.model.get('currentLine').slice();
     var wordsPerView = this.model.get('wordsPerView');
 
-    currentLine[lineIndex] = "<span class='currentWord'>" + currentLine[lineIndex] + "</span>";
     if ((lineIndex % wordsPerView === 0)) {
       this.updateLines();
       currentLine = this.model.get('currentLine').slice();
     }
+    currentLine[lineIndex] = "<span class='currentWord'>" + currentLine[lineIndex] + "</span>";
     this.$el.html([
       "<p>" + currentLine.join(" ") + "</p>"
       ]);
