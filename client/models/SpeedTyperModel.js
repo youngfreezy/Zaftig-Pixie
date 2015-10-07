@@ -27,6 +27,7 @@ var SpeedTyperModel = Backbone.Model.extend({
     currentIndex: 0,
     wpm: 0,
     practiceMode: false,
+    wordsPerView: 30,
 
     /*
     * 'gameOver' is updated from a socket handler, triggered
@@ -64,7 +65,6 @@ var SpeedTyperModel = Backbone.Model.extend({
 
     this.set('paragraphArray', this.get('paragraph').split(' '));
     this.updateCurrentLine();
-    this.updateNextLine();
   },
 
 
@@ -149,7 +149,6 @@ var SpeedTyperModel = Backbone.Model.extend({
       context.set('paragraph', data.text);
       context.set('paragraphArray', context.get('paragraph').split(' '));
       context.updateCurrentLine();
-      context.updateNextLine();
       context.trigger('paragraphSet');
     });
   },
@@ -209,18 +208,15 @@ var SpeedTyperModel = Backbone.Model.extend({
   },
 
   /*
-  * currentLine and nextLine refer to the text being displayed in paragraph view.
-  * Each currently contains the following five words to be shown, and is updated by
-  * the paragraphView
+  * currentLine refers to the text being displayed in paragraph view.
   */
   updateCurrentLine: function () {
+    var wordsPerView = this.get('wordsPerView');
     var index = this.get('currentIndex');
-    this.set('currentLine', this.get('paragraphArray').slice(index, index + 5));
-  },
-
-  updateNextLine: function () {
-    var index = this.get('currentIndex') + 5;
-    this.set('nextLine', this.get('paragraphArray').slice(index, index + 5));
+    console.log("The index is", index);
+    this.set('currentLine', this.get('paragraphArray').slice(index, index + wordsPerView));
+    console.log("The current line after updateCurrentLine is", this.get('currentLine'));
+    // console.log("updateCurrentLine is pointing to", this.get('paragraphArray').slice(index, index + 10));
   },
 
   saveGame: function () {
