@@ -26,6 +26,20 @@ module.exports = function(app, passport) {
     	// and pass it to the template. 
     })
   })
+
+  //FACEBOOK routes!
+
+  app.get('/auth/facebook', passport.authenticate('facebook', 
+//specific to the facbeook API. if you want something other than the default
+// you ahve to use the scope property
+    {scope: 'email'}));
+  app.get('/auth/facebook/callback', 
+    passport.authenticate('facebook', 
+      {
+        successRedirect: '/profile',
+        failureRedirect: '/'
+      }));
+ 
   app.get('/logout', function(req, res) {
   	req.logout();
   	res.redirect('/');
