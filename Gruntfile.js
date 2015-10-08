@@ -51,7 +51,7 @@ module.exports = function(grunt) {
       },
       speedTyper: {
         files: {
-          'client/dist/scripts/game.min.js': clientIncludeOrder
+          'client/dist/scripts/game.min.js': 'client/dist/scripts/game.js'
         }, 
         options: {
           sourceMap: true
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
       game: {
         files: {
           // concat all the speed-typer js files into one file
-          'client/dist/scripts/game.min.js': clientIncludeOrder
+          'client/dist/scripts/game.js': clientIncludeOrder
         }
       }
     },
@@ -107,15 +107,24 @@ module.exports = function(grunt) {
     },
 
     shell: {
-      prodServer: {
+      mergeMasterWithDeploy: {
  
-        command: 'git checkout deploy && git merge master && git push heroku deploy:master -f',
+        command: 'git checkout deploy && git merge master',
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
+      },
+      prodServer: {
+        command: 'git push heroku deploy:master -f',
         options: {
           stdout: true,
           stderr: true,
           failOnError: true
         }
       }
+
     },
 
     // create a watch task for tracking
@@ -140,24 +149,12 @@ module.exports = function(grunt) {
   });
 
 grunt.loadNpmTasks('grunt-npm-install');
-  // grunt.registerTask('server-dev', function (target) {
-    // Running nodejs in a different process and displaying output on the main console
-    // var nodemon = grunt.util.spawn({
-    //      cmd: 'grunt',
-    //      grunt: true,
-    //      args: 'nodemon'
-    // });
-    // nodemon.stdout.pipe(process.stdout);
-    // nodemon.stderr.pipe(process.stderr);
-
-    // grunt.task.run([ 'watch' ]);
-  // });
 
   // Perform a build
   grunt.registerTask('build', [ 'concat', 'uglify' ]);
 
   // Run all tests once
-  grunt.registerTask('test', [ 'express:dev', 'mochaTest', 'express:dev:stop']);
+  grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
 
   // Start watching and run tests when files concathange
   grunt.registerTask('default', [ 'npm-install', 'express:dev', 'mochaTest', 'build', 'watch' ]);
@@ -168,13 +165,15 @@ grunt.loadNpmTasks('grunt-npm-install');
     grunt.task.run([ 'watch' ]);
   });
 
-  grunt.registerTask('herokuUpload', function(n) {
+  grunt.registerTask('prepareDeployBranch', function(n) {
+    grunt.task.run(['shell:mergeMasterWithDeploy']);
+  });
+
+  grunt.registerTask('upload', function(n) {
     console.log("Running shell server upload");
     grunt.task.run([ 'shell:prodServer' ]);
   });
 
   // Deployment
-  // TODO: Create 'upload' task to upload to heroku
-  grunt.registerTask('deploy', [ 'build', 'test', 'upload' ]);
-  grunt.registerTask('herokuDeploy', [ 'build', 'test', 'herokuUpload' ]);
+  grunt.registerTask('deploy', [ 'prepareDeployBranch', 'build', 'test', 'upload' ]);
 };
