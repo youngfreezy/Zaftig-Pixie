@@ -108,7 +108,7 @@ module.exports = function(grunt) {
 
     shell: {
       mergeMasterWithDeploy: {
-        command: 'git checkout deploy && git add . && git commit -m "committing for deploy" && git pull --rebase upstream master',
+        command: 'git checkout deploy && git pull --rebase upstream master',
         options: {
           stdout: true,
           stderr: true,
