@@ -20,7 +20,7 @@ var userSchema = mongoose.Schema({
     id: String,
     token: String,
     displayName: String,
-    user: String
+    username: String
   }
 });
 

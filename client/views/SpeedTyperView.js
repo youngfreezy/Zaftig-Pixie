@@ -16,7 +16,7 @@ var SpeedTyperView = Backbone.View.extend({
     this.statsView = new StatsView({ model: this.model });
     this.paragraphView = new ParagraphView({ model: this.model });
     this.inputView = new InputView({ model: this.model });
-    var userModel = new UserModel();
+    var userModel = new UserModel({});
     this.loginView = new LoginView( {model: userModel} );
     this.render();
 

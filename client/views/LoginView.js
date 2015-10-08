@@ -9,7 +9,19 @@ var LoginView = Backbone.View.extend({
   className: "login-container",
 
   initialize: function () {
+    console.log("login view's model is", this.model);
     this.render();
+  },
+
+  events: {
+    'click a.twitter-button': function() {
+      this.loginUser()
+    }
+  },
+
+  loginUser: function() {
+    console.log("clicked twitter button!");
+    this.model.loginUser();
   },
 
   /*
@@ -20,9 +32,8 @@ var LoginView = Backbone.View.extend({
     console.log('Is the user logged in? ', this.model.get('isLoggedIn'));
     if (!this.model.get('isLoggedIn')) {
       this.$el.append(
-        '<p>Login or Register with Facebook or Twitter:</p>\
-        <a href="/auth/facebook">Facebook</a>\
-        <a href="/auth/twitter">Twitter</a>'
+        '<p>Login or Register with Twitter:</p>\
+        <a class="twitter-button">Twitter</a>'
       );
     } else {
       this.$el.append(
