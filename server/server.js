@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
-var mongoose = require('mongoose')
-var passport = require('passport')
+var mongoose = require('mongoose');
+var passport = require('passport');
   //this module lets us view messages that come back with authentication
 var flash = require('connect-flash');
 var FacebookStrategy = require('passport-facebook')
@@ -37,7 +37,7 @@ app.set('view engine', 'ejs');
 
 app.use(session({
   secret: 'fareezeatscookiesthatswhyheisoverweight'
-}))
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
