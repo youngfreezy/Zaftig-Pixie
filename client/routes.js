@@ -22,8 +22,8 @@ module.exports = function(app, passport) {
     });
 
   })
-  app.get('/profile', isLoggedIn, function(req, res) {
-
+  app.get('/profile', function(req, res) {
+    // console.log("in the /get to /profile")
     //render the page 
     res.render('profile.ejs', {
       user: req.user //get the user out of the session
@@ -39,6 +39,7 @@ module.exports = function(app, passport) {
     {
       scope: ['email']
     }));
+
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
       successRedirect: '/profile',
@@ -51,15 +52,22 @@ module.exports = function(app, passport) {
 
   })
 
+  //twitter routes:
 
+  app.get('/auth/twitter', passport.authenticate('twitter'));
 
+  app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', {
+      successRedirect: '/profile',
+      failureRedirect: '/'
+    }))
   //route middleware to make sure that a user is loggedIn yo
 
-  function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-
-    res.redirect('/');
-  }
+  // function isLoggedIn(req, res, next) {
+  //   if (req.isAuthenticated()) {
+  //   next();
+  //   }
+  //   console.log("user is not logged in redirecting to home route")
+  //   res.redirect('/');
+  // }
 }
