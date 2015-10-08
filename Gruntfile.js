@@ -152,13 +152,6 @@ grunt.loadNpmTasks('grunt-npm-install');
   grunt.registerTask('default', [ 'npm-install', 'express:dev', 'mochaTest', 'build', 'watch' ]);
 
   // If the production option has been passed, deploy the app, otherwise run locally
-  grunt.registerTask('prepareDeployBranch', function(n) {
-    grunt.task.run(['shell:mergeMasterWithDeploy']);
-  });
-
-  grunt.registerTask('commitDist', function(n) {
-    grunt.task.run(['shell:commitDist']);
-  });
 
   grunt.registerTask('upload', function(n) {
     grunt.task.run([ 'shell:prodServer' ]);
