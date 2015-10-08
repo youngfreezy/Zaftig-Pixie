@@ -11,7 +11,9 @@ var path = require('path');
 var parser = require('body-parser');
 
 // Set what we are listening on.
-app.set("port", 3000);
+var port = process.env.PORT || 3000;
+
+app.set("port", port);
 
 // Logging and parsing
 app.use(parser.json());

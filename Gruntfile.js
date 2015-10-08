@@ -44,12 +44,18 @@ module.exports = function(grunt) {
     // uglify the files
     uglify: {
       lib: {
-        files: { 'client/dist/lib/lib.ug.js': 'client/dist/lib/lib.js' }
+        files: { 'client/dist/lib/lib.min.js': 'client/dist/lib/lib.js' },
+        options: {
+          sourceMap: true
+        },
       },
       speedTyper: {
         files: {
-          'client/dist/scripts/game.js': clientIncludeOrder
-        }
+          'client/dist/scripts/game.min.js': 'client/dist/scripts/game.js'
+        }, 
+        options: {
+          sourceMap: true
+        },
       }
     },
 
@@ -101,15 +107,24 @@ module.exports = function(grunt) {
     },
 
     shell: {
+      mergeMasterWithDeploy: {
+ 
+        command: 'git checkout deploy && git pull --rebase upstream master',
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
+      },
       prodServer: {
-
-        command: 'git push heroku master',
+        command: 'git push heroku deploy:master -f',
         options: {
           stdout: true,
           stderr: true,
           failOnError: true
         }
       }
+
     },
 
     // create a watch task for tracking
@@ -134,18 +149,6 @@ module.exports = function(grunt) {
   });
 
 grunt.loadNpmTasks('grunt-npm-install');
-  // grunt.registerTask('server-dev', function (target) {
-    // Running nodejs in a different process and displaying output on the main console
-    // var nodemon = grunt.util.spawn({
-    //      cmd: 'grunt',
-    //      grunt: true,
-    //      args: 'nodemon'
-    // });
-    // nodemon.stdout.pipe(process.stdout);
-    // nodemon.stderr.pipe(process.stderr);
-
-    // grunt.task.run([ 'watch' ]);
-  // });
 
   // Perform a build
   grunt.registerTask('build', [ 'concat', 'uglify' ]);
@@ -158,15 +161,19 @@ grunt.loadNpmTasks('grunt-npm-install');
 
   // If the production option has been passed, deploy the app, otherwise run locally
   grunt.registerTask('upload', function(n) {
-    if(grunt.option('prod')) {
+    console.log("Just watching");
+    grunt.task.run([ 'watch' ]);
+  });
 
-      grunt.task.run([ 'shell:prodServer' ]);
-          } else {
-      grunt.task.run([ 'watch' ]);
-    }
+  grunt.registerTask('prepareDeployBranch', function(n) {
+    grunt.task.run(['shell:mergeMasterWithDeploy']);
+  });
+
+  grunt.registerTask('upload', function(n) {
+    console.log("Running shell server upload");
+    grunt.task.run([ 'shell:prodServer' ]);
   });
 
   // Deployment
-  // TODO: Create 'upload' task to upload to heroku
-  grunt.registerTask('deploy', [ 'build', 'test', 'upload' ]);
+  grunt.registerTask('deploy', [ 'prepareDeployBranch', 'build', 'test', 'upload' ]);
 };

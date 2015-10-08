@@ -2,7 +2,9 @@
   "name": "tests-for-speed-typer",
   "version": "0.1.0",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "node node_modules/bower/bin/bower install",
+    "start": "node server/server.js"
   },
   "devDependencies": {
     "chai": "^1.9.1",
@@ -32,6 +34,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^2.10.2",
     "body-parser": "^1.14.1",
+    "bower": "^1.5.3",
     "casperjs": "^1.1.0-beta3",
     "express": "^4.13.3",
     "grunt-contrib-cssmin": "^0.14.0",
