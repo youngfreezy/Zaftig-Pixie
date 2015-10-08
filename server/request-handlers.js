@@ -73,6 +73,7 @@ module.exports.register = function (request, response) {
 module.exports.text = function (request, response) {
   // Correct errors in API string output before serving back to client
   var formatString = function (string) {
+    //console.log("String to format", string);
     var result = '';
     // replace "&quot;" with ""
     var escapedQuotes = string.replace(/&quot;/g, '"');
@@ -91,18 +92,20 @@ module.exports.text = function (request, response) {
         result += escapedQuotes[i];
       }
     }
-
     return result;
   };
 
   randomWiki(function (err, topic) {
     var data = {};
-    //console.log(topic);
-    articleTitle = topic;
+    data.text = "";
+    console.log(topic);
     wikiJSON.from_api(topic, "en", function(markup){
-      data.text= formatString(wikiJSON.plaintext(markup));
-      response.send(data);
-    });
+        //console.log(formatString(wikiJSON.plaintext(markup)));
+        data.text = formatString(wikiJSON.plaintext(markup));
+        console.log(data);
+        response.send(data);
+      });
+
   });
 
   // Hit API for data, correct errors, serve to client

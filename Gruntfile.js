@@ -143,13 +143,13 @@ module.exports = function(grunt) {
 grunt.loadNpmTasks('grunt-npm-install');
 
   // Perform a build
-  grunt.registerTask('build', [ 'concat', 'uglify' ]);
+  grunt.registerTask('build', [ 'concat', 'uglify']);
 
   // Run all tests once
   grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
 
   // Start watching and run tests when files concathange
-  grunt.registerTask('default', [ 'npm-install', 'express:dev', 'mochaTest', 'build', 'watch' ]);
+  grunt.registerTask('default', [ 'npm-install', 'express:dev', 'mochaTest', 'build', 'watch']);
 
   // If the production option has been passed, deploy the app, otherwise run locally
 
