@@ -8,6 +8,7 @@ var UserModel = Backbone.Model.extend({
 
     isLoggedIn: false
 
+
   },
 
   initialize: function () {
@@ -23,6 +24,3 @@ var UserModel = Backbone.Model.extend({
 
 
 });
-
-
-

@@ -20,19 +20,18 @@ module.exports = function(passport) {
   passport.deserializeUser(function(id, done) {
     User.findById(id, function(err, user) {
       done(err, user);
-    });
-  });
+    })
+  })
   ///////TWITTER:
   passport.use(new TwitterStrategy({
-
       consumerKey: configAuth.twitterAuth.consumerKey,
       consumerSecret: configAuth.twitterAuth.consumerSecret,
       callbackURL: configAuth.twitterAuth.callbackURL,
       passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-
     },
     function(req, token, tokenSecret, profile, done) {
-
+      console.log(profile);
+      console.log("This is the profile id:", profile.id);
       // asynchronous
       process.nextTick(function() {
 
@@ -95,9 +94,7 @@ module.exports = function(passport) {
             return done(null, user);
           });
         }
-
-      });
-
-    }));
-
-};
+    });
+  })
+);
+}

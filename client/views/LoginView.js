@@ -24,6 +24,7 @@ var LoginView = Backbone.View.extend({
     this.model.loginUser();
   },
 
+
   /*
   * render grabs the current and next lines from the model and
   *   displays the in the html.
