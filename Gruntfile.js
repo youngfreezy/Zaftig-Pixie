@@ -46,6 +46,9 @@ module.exports = function(grunt) {
       lib: {
         files: { 'client/dist/lib/lib.ug.js': 'client/dist/lib/lib.js' }
       },
+      options: {
+        sourceMap: true
+      },
       speedTyper: {
         files: {
           'client/dist/scripts/game.js': clientIncludeOrder
@@ -103,7 +106,7 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
 
-        command: 'git push heroku master',
+        command: 'git push heroku feat/add_deployment_to_heroku:master',
         options: {
           stdout: true,
           stderr: true,
@@ -151,22 +154,24 @@ grunt.loadNpmTasks('grunt-npm-install');
   grunt.registerTask('build', [ 'concat', 'uglify' ]);
 
   // Run all tests once
-  grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
+  grunt.registerTask('test', [ 'express:dev', 'mochaTest', 'express:dev:stop']);
 
   // Start watching and run tests when files concathange
   grunt.registerTask('default', [ 'npm-install', 'express:dev', 'mochaTest', 'build', 'watch' ]);
 
   // If the production option has been passed, deploy the app, otherwise run locally
   grunt.registerTask('upload', function(n) {
-    if(grunt.option('prod')) {
+    console.log("Just watching");
+    grunt.task.run([ 'watch' ]);
+  });
 
-      grunt.task.run([ 'shell:prodServer' ]);
-          } else {
-      grunt.task.run([ 'watch' ]);
-    }
+  grunt.registerTask('herokuUpload', function(n) {
+    console.log("Running shell server upload");
+    grunt.task.run([ 'shell:prodServer' ]);
   });
 
   // Deployment
   // TODO: Create 'upload' task to upload to heroku
   grunt.registerTask('deploy', [ 'build', 'test', 'upload' ]);
+  grunt.registerTask('herokuDeploy', [ 'build', 'test', 'herokuUpload' ]);
 };
