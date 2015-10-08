@@ -120,11 +120,11 @@ module.exports = function(passport) {
             'facebook.id': profile.id
           }, function(err, user) {
             if (err) {
-              throw err
+              throw err;
             }
 
             if (user) {
-              console.log("there is a user already")
+              console.log("there is a user already");
               done(null, user);
             } else {
               //create the user  if not found
@@ -141,12 +141,12 @@ module.exports = function(passport) {
                   throw err;
 
                 // if successful, return the new user
-                console.log("successfully saved user into database")
+                console.log("successfully saved user into database");
                 done(null, newUser);
               });
 
             }
-          })
-        })
+          });
+        });
       }));
-}
+};
