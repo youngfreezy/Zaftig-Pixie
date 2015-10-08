@@ -44,15 +44,18 @@ module.exports = function(grunt) {
     // uglify the files
     uglify: {
       lib: {
-        files: { 'client/dist/lib/lib.ug.js': 'client/dist/lib/lib.js' }
-      },
-      options: {
-        sourceMap: true
+        files: { 'client/dist/lib/lib.min.js': 'client/dist/lib/lib.js' },
+        options: {
+          sourceMap: true
+        },
       },
       speedTyper: {
         files: {
-          'client/dist/scripts/game.js': clientIncludeOrder
-        }
+          'client/dist/scripts/game.min.js': clientIncludeOrder
+        }, 
+        options: {
+          sourceMap: true
+        },
       }
     },
 
@@ -74,7 +77,7 @@ module.exports = function(grunt) {
       game: {
         files: {
           // concat all the speed-typer js files into one file
-          'client/dist/scripts/game.js': clientIncludeOrder
+          'client/dist/scripts/game.min.js': clientIncludeOrder
         }
       }
     },
@@ -106,7 +109,7 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
  
-        command: 'git push heroku master -f',
+        command: 'git checkout deploy && git merge master && git push heroku deploy:master -f',
         options: {
           stdout: true,
           stderr: true,
