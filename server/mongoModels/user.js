@@ -15,6 +15,12 @@ var userSchema = mongoose.Schema({
     token : String,
     email : String,
     name : String
+  },
+  twitter: {
+    id: String,
+    token: String,
+    displayName: String,
+    user: String
   }
 })
 var User = mongoose.model('User', userSchema);
