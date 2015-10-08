@@ -1,5 +1,5 @@
 var AppView = Backbone.View.extend({
-  
+
   className: 'container',
 
   initialize: function(params) {

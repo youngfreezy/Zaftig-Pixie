@@ -37,8 +37,8 @@ var SpeedTyperView = Backbone.View.extend({
       $statsView.append([
         this.statsView.$el
       ])
-    ]); 
-  }, 
+    ]);
+  },
 
   changeText: function (status) {
     if(status === 'beginGame'){

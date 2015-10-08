@@ -14,6 +14,7 @@ var ParagraphView = Backbone.View.extend({
     this.model.on('paragraphSet', this.updateCurrent, this);
     this.model.on('change:currentLine', this.render, this);
     this.model.fetchText();
+    this.model.updateCurrentLine();
     this.render();
   },
 
@@ -43,7 +44,7 @@ var ParagraphView = Backbone.View.extend({
   * updateCurrent also adds a 'currentWord' class to the current word which
   *   highlights that word for the user.
   */
-  updateCurrent: function () {  
+  updateCurrent: function () {
     var index = this.model.get('currentIndex');
     var lineIndex = index % this.model.get('wordsPerView');
     var currentLine = this.model.get('currentLine').slice();
