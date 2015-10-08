@@ -16,6 +16,7 @@ module.exports.user = function (request, response) {
       response.send(users);
     });
   }
+  // response.send(200);
 
 };
 

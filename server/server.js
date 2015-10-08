@@ -1,4 +1,4 @@
-var express = require('express');
+  var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -31,7 +31,7 @@ app.use(bodyParser()); // get information from html forms
 
 //ejs for templating.
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 //things that are required for passport:
 
@@ -42,7 +42,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 //routes
-require('../client/routes.js')(app, passport);
 
 // Set what we are listening on.
 var port = process.env.PORT || 3000;
@@ -65,6 +64,7 @@ app.use(sassMiddleware({
 // Serve the client files
 app.use(express.static(__dirname + "/../client"));
 
+require('./routes')(app, passport);
 
 // If we are being run directly, run the server.
 if (!module.parent) {
@@ -122,7 +122,7 @@ io.on('connection', function(socket) {
 app.use('/wikipedia', handlers.wikipedia);
 
 // // request user data from database
-// app.use('/user', handlers.user);
+app.use('/user', handlers.user);
 
 // // login user and create session
 // app.use('/login', handlers.login);
@@ -130,7 +130,7 @@ app.use('/wikipedia', handlers.wikipedia);
 // // register a new user to the databse
 // app.use('/register', handlers.register);
 
-// // serve passage to the client
-// app.use('/text', handlers.text);
+// serve passage to the client
+app.use('/text', handlers.text);
 
 module.exports.users = users;

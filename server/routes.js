@@ -1,9 +1,10 @@
 module.exports = function(app, passport) {
   //HOME PAGE (with login links):
 
-  app.get('/', function(req, res) {
-    res.render('index.ejs');
-  })
+  app.get('/', isLoggedIn, function(req, res) {
+    console.log('req.user is ', req.user);
+    res.send('/');
+  });
 
   //LOGIN 
 
@@ -21,15 +22,19 @@ module.exports = function(app, passport) {
       message: req.flash('signupMessage')
     });
 
-  })
-  app.get('/profile', function(req, res) {
+  });
+
+  app.get('/play', function(req, res) {
     // console.log("in the /get to /profile")
     //render the page 
-    res.render('profile.ejs', {
+    console.log('I am in the play callback');
+    console.log('The req.user is ', req.user);
+    res.send('/', {
       user: req.user //get the user out of the session
       // and pass it to the template. 
-    })
-  })
+    });
+    res.redirect('/');
+  });
 
   //FACEBOOK routes!
 
@@ -42,7 +47,7 @@ module.exports = function(app, passport) {
 
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/profile',
+      successRedirect: '/',
       failureRedirect: '/'
     }));
 
@@ -50,7 +55,7 @@ module.exports = function(app, passport) {
     req.logout();
     res.redirect('/');
 
-  })
+  });
 
   //twitter routes:
 
@@ -58,16 +63,16 @@ module.exports = function(app, passport) {
 
   app.get('/auth/twitter/callback',
     passport.authenticate('twitter', {
-      successRedirect: '/profile',
+      successRedirect: '/play',
       failureRedirect: '/'
-    }))
+    }));
   //route middleware to make sure that a user is loggedIn yo
 
-  // function isLoggedIn(req, res, next) {
-  //   if (req.isAuthenticated()) {
-  //   next();
-  //   }
-  //   console.log("user is not logged in redirecting to home route")
-  //   res.redirect('/');
-  // }
-}
+  function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+    next();
+    }
+    console.log("user is not logged in redirecting to home route");
+    res.redirect('/');
+  }
+};

@@ -22,7 +22,8 @@ var userSchema = mongoose.Schema({
     displayName: String,
     user: String
   }
-})
+});
+
 var User = mongoose.model('User', userSchema);
 
 User.comparePassword = function(candidatePassword, savedPassword, cb) {
