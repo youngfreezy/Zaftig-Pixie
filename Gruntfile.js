@@ -107,17 +107,9 @@ module.exports = function(grunt) {
     },
 
     shell: {
-      mergeMasterWithDeploy: {
- 
-        command: 'git checkout deploy && git add . && git commit -m "committing for deploy" && git pull --rebase upstream master',
-        options: {
-          stdout: true,
-          stderr: true,
-          failOnError: true
-        }
-      },
+
       prodServer: {
-        command: 'git push heroku deploy:master -f',
+        command: 'git checkout deploy && git commit -am "adding dist files..." && git push heroku deploy:master -f',
         options: {
           stdout: true,
           stderr: true,
@@ -160,20 +152,11 @@ grunt.loadNpmTasks('grunt-npm-install');
   grunt.registerTask('default', [ 'npm-install', 'express:dev', 'mochaTest', 'build', 'watch' ]);
 
   // If the production option has been passed, deploy the app, otherwise run locally
-  grunt.registerTask('upload', function(n) {
-    console.log("Just watching");
-    grunt.task.run([ 'watch' ]);
-  });
-
-  grunt.registerTask('prepareDeployBranch', function(n) {
-    grunt.task.run(['shell:mergeMasterWithDeploy']);
-  });
 
   grunt.registerTask('upload', function(n) {
-    console.log("Running shell server upload");
     grunt.task.run([ 'shell:prodServer' ]);
   });
 
   // Deployment
-  grunt.registerTask('deploy', [ 'prepareDeployBranch', 'build', 'test', 'upload' ]);
+  grunt.registerTask('deploy', [ 'build', 'test', 'upload' ]);
 };
