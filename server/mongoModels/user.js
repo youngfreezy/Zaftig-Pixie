@@ -3,9 +3,26 @@ var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
 
 
+// var userSchema = mongoose.Schema({
+//   username: { type: String, required: true, index: { unique: true } },
+//   password: { type: String, required: true }
+// });
+
+//need to update for facebook Authentication:
 var userSchema = mongoose.Schema({
-  username: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true }
+  facebook : {
+    id: String,
+    token : String,
+    email : String,
+    name : String
+  },
+  twitter: {
+    id: String,
+    token: String,
+    displayName: String,
+    username: String,
+    photo_url: String
+  }
 });
 
 var User = mongoose.model('User', userSchema);
