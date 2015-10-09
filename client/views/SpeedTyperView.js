@@ -1,7 +1,7 @@
 /*
-* SpeedTyperView is a container for the interactive player portion of the
-*  game, which exist in statsView, inputView and paragraphView.
-*/
+ * SpeedTyperView is a container for the interactive player portion of the
+ *  game, which exist in statsView, inputView and paragraphView.
+ */
 var SpeedTyperView = Backbone.View.extend({
 
   tagName: "div",
@@ -9,24 +9,42 @@ var SpeedTyperView = Backbone.View.extend({
   className: "speedTyperContainer",
 
   events: {
-        "click .button" : "restart"
-    },
+    "click .button": "restart"
+  },
 
-  initialize: function ( params ) {
-    this.statsView = new StatsView({ model: this.model });
-    this.paragraphView = new ParagraphView({ model: this.model });
-    this.inputView = new InputView({ model: this.model });
+  initialize: function(params) {
+    this.statsView = new StatsView({
+      model: this.model
+    });
+    this.paragraphView = new ParagraphView({
+      model: this.model
+    });
+    this.inputView = new InputView({
+      model: this.model
+    });
     var userModel = new UserModel({});
-    this.loginView = new LoginView( {model: userModel} );
+    this.loginView = new LoginView({
+      model: userModel
+    });
     this.render();
 
-    this.model.on('beginGame', function(){ this.changeText('beginGame'); }, this);
-    this.model.on('gameWin', function(){ this.changeText('win'); }, this);
-    this.model.on('gameLose', function(){ this.changeText('lose'); }, this);
+    this.model.on('beginGame', function() {
+      this.changeText('beginGame');
+    }, this);
+    this.model.on('gameWin', function() {
+      this.changeText('win');
+    }, this);
+    this.model.on('gameLose', function() {
+      this.changeText('lose');
+    }, this);
+
+    this.model.on('tooManyTypos', function() {
+      this.changeText('typos');
+    }, this);
 
   },
 
-  render: function () {
+  render: function() {
     var $typingView = $('<div class="typing-view"></div>');
     var $statsView = $('<div class="stats-view"></div>');
     var $loginView = $('<div class="login-view"></div>');
@@ -46,21 +64,33 @@ var SpeedTyperView = Backbone.View.extend({
     ]);
   },
 
-  changeText: function (status) {
-    if(status === 'beginGame'){
-      $('h2').text('Start Typing!');
-      $('h3.practice').remove();
-    } else if(status === 'win'){
-      $('h2').text('You win!');
-      $('h2').append('<p><a href="#" class="button">New Game</a></p>');
-    } else if(status === 'lose'){
-      $('h2').text('You lose!');
-      $('h2').append('<p><a href="#" class="button">New Game</a></p>');
+  changeText: function(status) {
+    if (status === 'beginGame') {
+      $('h2')
+        .text('Start Typing!');
+      $('h3.practice')
+        .remove();
+    } else if (status === 'win') {
+      $('h2')
+        .text('You win!');
+      $('h2')
+        .append('<p><a href="#" class="button">New Game</a></p>');
+    } else if (status === 'lose') {
+      $('h2')
+        .text('You lose!');
+      $('h2')
+        .append('<p><a href="#" class="button">New Game</a></p>');
+    } else if (status === 'typos') {
+      $('h2')
+        .text('Too many typos - you lost!');
+      $('h2')
+        .append('<p><a href="#" class="button">New Game</a></p>');
     }
   },
 
   restart: function() {
-    this.model.get('socket').emit('login');
+    this.model.get('socket')
+      .emit('login');
     this.initialize();
   }
 

@@ -143,7 +143,7 @@ module.exports = function(grunt) {
 grunt.loadNpmTasks('grunt-npm-install');
 
   // Perform a build
-  grunt.registerTask('build', [ 'concat', 'uglify']);
+  grunt.registerTask('build', [ 'concat']);
 
   // Run all tests once
   grunt.registerTask('test', [ 'express:dev', 'mochaTest' ]);
