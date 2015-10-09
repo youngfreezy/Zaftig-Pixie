@@ -42,6 +42,10 @@ var SpeedTyperView = Backbone.View.extend({
       this.changeText('typos');
     }, this);
 
+    this.model.on('toolong', function() {
+      this.changeText('toolong');
+    }, this);
+
   },
 
   render: function() {
@@ -86,6 +90,13 @@ var SpeedTyperView = Backbone.View.extend({
       $('h2')
         .append('<p><a href="#" class="button">New Game</a></p>');
     }
+    else if (status === 'toolong') {
+      $('h2')
+        .text("You and your opponent are evenly matched- it's a draw!");
+      $('h2')
+        .append('<p><a href="#" class="button">New Game</a></p>');
+    }
+
   },
 
   restart: function() {

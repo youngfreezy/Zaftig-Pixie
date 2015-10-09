@@ -130,7 +130,7 @@ var SpeedTyperModel = Backbone.Model.extend({
     this.trigger('gameLose');
   },
 
-  tooManyTypos: function(){
+  tooManyTypos: function() {
     this.set('gameOver', true);
     this.trigger('tooManyTypos')
   },
@@ -237,7 +237,13 @@ var SpeedTyperModel = Backbone.Model.extend({
     var wpm = this.get('numCorrect') / elapsed;
     this.set('wpm', wpm);
     this.trigger('update');
+    console.log(elapsed);
+    if (elapsed > 1) {
+      this.set('gameOver', true);
+      this.trigger('toolong')
+    }
   },
+
 
   /*
    * currentLine refers to the text being displayed in paragraph view.
