@@ -101,9 +101,8 @@ module.exports.text = function (request, response) {
     data.text = "";
     console.log(topic);
     wikiJSON.from_api(topic, "en", function(markup){
-        //console.log(formatString(wikiJSON.plaintext(markup)));
+        console.log(formatString(wikiJSON.plaintext(markup)));
         data.text = formatString(wikiJSON.plaintext(markup));
-        console.log(data);
         response.send(data);
       });
 
